@@ -1,0 +1,193 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Создать вакансию{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/create_vacancy.css">
+
+<div class="create-vacancy-container">
+    <div class="create-vacancy-header">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Создать вакансию
+        </h1>
+        <p class="subtitle">Заполните все необходимые поля, чтобы опубликовать вакансию</p>
+    </div>
+
+    <div class="create-vacancy-card">
+        <div class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <a onclick="goBack()">Назад</a>
+        </div>
+        <form method="post" enctype="multipart/form-data" class="vacancy-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+
+                {% for field in form %}
+                <div class="form-field {% if field.errors %}has-error{% endif %}">
+    <label class="form-label">
+        {{ field.label }}
+        {% if field.field.required %}<span class="required-star">*</span>{% endif %}
+    </label>
+    
+    {% if field.name == 'tags' %}
+        <div class="tags-selector">
+            <!-- Скрытое оригинальное поле -->
+            <select name="{{ field.name }}" id="id_{{ field.name }}" multiple style="display: none;">
+                {% for value, label in field.field.choices %}
+                    <option value="{{ value }}" {% if value in field.value or value|stringformat:"s" in field.value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            
+            <!-- Кастомный триггер -->
+            <div class="select-trigger">
+                <span>Выберите теги</span>
+            </div>
+            
+            <!-- Выпадающий список -->
+            <div class="tags-dropdown">
+                {% for value, label in field.field.choices %}
+                    <div class="tag-item" data-value="{{ value }}">
+                        {{ label }}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Выбранные теги -->
+            <div class="selected-tags" id="selected-tags-container">
+                {% for value, label in field.field.choices %}
+                    {% if value in field.value or value|stringformat:"s" in field.value %}
+                        <div class="tag-chip">
+                            {{ label }}
+                            <button type="button" data-value="{{ value }}">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        {{ field }}
+    {% endif %}
+    
+    {% if field.help_text %}
+        <p class="help-text">{{ field.help_text }}</p>
+    {% endif %}
+    
+    {% for error in field.errors %}
+        <p class="error-text">{{ error }}</p>
+    {% endfor %}
+</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-actions">
+                <a href="" class="cancel-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Отмена
+                </a>
+                <button type="submit" class="submit-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Опубликовать вакансию
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tagsSelectors = document.querySelectorAll('.tags-selector');
+    
+    tagsSelectors.forEach(selector => {
+        const trigger = selector.querySelector('.select-trigger');
+        const dropdown = selector.querySelector('.tags-dropdown');
+        const tagItems = selector.querySelectorAll('.tag-item');
+        const selectElement = selector.querySelector('select');
+        const selectedTagsContainer = selector.querySelector('.selected-tags');
+        
+        // Открытие/закрытие выпадающего списка
+        trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            selector.classList.toggle('active');
+        });
+        
+        // Выбор тега
+        tagItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                const option = selectElement.querySelector(`option[value="${value}"]`);
+                
+                option.selected = !option.selected;
+                this.classList.toggle('selected');
+                updateSelectedTags();
+            });
+        });
+        
+        // Обновление выбранных тегов
+        function updateSelectedTags() {
+            selectedTagsContainer.innerHTML = '';
+            Array.from(selectElement.selectedOptions).forEach(option => {
+                const tagChip = document.createElement('div');
+                tagChip.className = 'tag-chip';
+                tagChip.innerHTML = `
+                    ${option.text}
+                    <button type="button" data-value="${option.value}">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                `;
+                selectedTagsContainer.appendChild(tagChip);
+            });
+        }
+        
+        // Удаление тега
+        selectedTagsContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+                const value = button.getAttribute('data-value');
+                
+                const option = selectElement.querySelector(`option[value="${value}"]`);
+                option.selected = false;
+                
+                const tagItem = selector.querySelector(`.tag-item[data-value="${value}"]`);
+                tagItem.classList.remove('selected');
+                
+                updateSelectedTags();
+            }
+        });
+        
+        // Закрытие при клике вне списка
+        document.addEventListener('click', function() {
+            selector.classList.remove('active');
+        });
+        
+        // Инициализация выбранных тегов
+        tagItems.forEach(item => {
+            const value = item.getAttribute('data-value');
+            const option = selectElement.querySelector(`option[value="${value}"]`);
+            
+            if (option.selected) {
+                item.classList.add('selected');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

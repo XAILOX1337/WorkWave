@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Регистрация пользователя{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/register.css">
+
+<div class="center-form">
+    <div class="register-form active" id="form1">
+        <div class="register-container">
+            <h2 class="title">Регистрация пользователя</h2>
+            
+            
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="links-container">
+                        <a class="link" style="right: 10pt; " href="{% url 'register_company' %}">Хотите зарегистрировать компанию?</a>
+                </div>
+                <div class="continue">
+                    
+                    <button type="submit" class="submit-button">Продолжить</button>
+                </div>
+                
+                <div class="terms-of-agreement">
+                    
+                    <p>Нажимая «Продолжить», вы соглашаетесь с условиями использования</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,230 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+Личный кабинет компании: {{ company.name }}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/company_dashboard.css">
+
+<div class="containerr">
+    <div class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <a onclick="goBack()">Назад</a>
+    </div>
+    <div class="company-header">
+        <h1>
+            <div class="profile-photo">
+                <div class="photo-container">
+                {% if company.photo %}
+                    <img src="{{ company.photo.url }}" alt="Логотип компании" id="photo-preview">
+                {% else %}
+                    <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-building" style="font-size: 3rem; color: #a0aec0;"></i>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            {{ company.name }}
+        </h1>
+    </div>
+    
+    <div class="dashboard-section">
+        <h2>Ваши вакансии</h2>
+        <div class="vacancies-list">
+            {% for vacancy in vacancies %}
+            <div class="vacancy-card">
+                <div class="vacancy-header">
+                    <div class="vacancy-info">
+                        <h2>{{ vacancy.title }}</h2>
+                        <p class="salary">{{ vacancy.salary }} ₽</p>
+                        <div class="vacancy-details">
+                            <span class="detail-badge">
+                                <i class="fas fa-briefcase"></i>
+                                {% if vacancy.employment_type == 'full' %}Полная занятость
+                                {% elif vacancy.employment_type == 'part' %}Частичная занятость
+                                {% elif vacancy.employment_type == 'project' %}Проектная работа
+                                {% elif vacancy.employment_type == 'volunteer' %}Волонтерство
+                                {% endif %}
+                            </span>
+                            <span class="detail-badge">
+                                <i class="fas fa-clock"></i>
+                                {% if vacancy.experience == 'no_experience' %}Без опыта
+                                {% elif vacancy.experience == '1_3' %}1-3 года
+                                {% elif vacancy.experience == '3_6' %}3-6 лет
+                                {% elif vacancy.experience == '6_plus' %}6+ лет
+                                {% elif vacancy.experience == 'any' %}Любой опыт
+                                {% endif %}
+                            </span>
+ <div class="absolute top-2 right-2 space-x-2">
+        <a href="{% url 'edit_vacancy' vacancy.id %}" 
+           class="text-blue-600 hover:text-blue-800"
+           title="Редактировать">
+            
+        </a>
+        <!-- Можно добавить кнопку удаления -->
+    </div>
+                        </div>
+                    </div>
+                    {% if vacancy.photo %}
+                        <img src="{{ vacancy.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% elif vacancy.company.photo %}
+                        <img src="{{ vacancy.company.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% else %}
+                        <div class="profile-photo">
+                            <div class="photo-container">
+                        <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+                </div>
+                <div class="tags-container">
+                    {% for tag in vacancy.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+                <div class="vacancy-actions">
+                    <a href="{% url 'delete_vacancy' vacancy.id %}" class="delete-button" title="Удалить">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    <a href="{% url 'vacancy_detail' vacancy.id %}" class="action-button">Просмотр</a>
+                    <a href="{% url 'edit_vacancy' vacancy.id %}" class="action-button edit-button">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <p>У вас пока нет вакансий</p>
+            {% endfor %}
+        </div>
+
+        
+        <a href="{% url 'create_vacancy' %}" class="add-vacancy-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Создать вакансию
+        </a>
+    </div>
+    
+    <div class="dashboard-section">
+        <h2>Отклики на ваши вакансии</h2>
+        <div class="applications-list">
+            {% for application in applications %}
+                <div class="application-item">
+                    <div class="application-header">
+                        <div>
+                            <p><strong>Вакансия:</strong> <a href="{% url 'vacancy_detail' application.vacancy.id %}" class="plain-link">{{ application.vacancy.title }}</a></p>
+                            <p><strong>От пользователя:</strong> <a href="{% url 'profile' application.user.id %}" class="plain-link">{{ application.user.userprofile.full_name|default:application.user.username }}</a></p>
+                        </div>
+                        <span class="application-date">{{ application.created_at|date:"d.m.Y" }}</span>
+                    </div>
+                    <p class="application-message">{{ application.message }}</p>
+                    <div class="application-actions">
+                        <a href="{% url 'chat' application.user.id %}" class="action-button">
+                            <i class="fas fa-comments"></i> Написать
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="no-applications">Пока нет откликов на ваши вакансии</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="account-actions">
+        <a href="{% url 'logout' %}" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Выйти из аккаунта
+        </a>
+    </div>
+</div>
+
+<style>
+    /* Дополнительные стили для новых элементов */
+    .vacancy-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0;
+    }
+    
+    .detail-badge {
+        background: #f0f4f8;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .detail-badge i {
+        color: #3b82f6;
+        font-size: 12px;
+    }
+    
+    .vacancy-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .action-button {
+        padding: 8px 15px;
+        border-radius: 6px;
+        background: #3b82f6;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+    }
+    
+    .action-button:hover {
+        background: #2563eb;
+        color: white;
+    }
+    
+    .edit-button {
+        background: #2563eb;
+    }
+    
+    .edit-button:hover {
+        background: #2563eb;
+        color: white;
+    }
+    
+    .application-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .application-date {
+        color: #64748b;
+        font-size: 14px;
+    }
+    
+    .application-message {
+        color: #475569;
+        margin: 10px 0;
+    }
+    
+    .no-applications {
+        color: #64748b;
+        text-align: center;
+        padding: 20px;
+    }
+</style>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,145 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}Конструктор резюме{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/resume_builder.css">
+
+<div class="resume-builder-container">
+    <div class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <a onclick="goBack()">Назад</a>
+    </div>
+    <h1 class="resume-title">Конструктор резюме</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Основная информация -->
+        <div class="resume-section">
+            <h2 class="section-title">1. Основная информация</h2>
+            <div class="form-grid">
+                <!-- Первая строка: ФИО -->
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="{{ resume_form.last_name.id_for_label }}">Фамилия</label>
+                        {{ resume_form.last_name }}
+                        {% if resume_form.last_name.errors %}
+                        <div class="error">{{ resume_form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label for="{{ resume_form.first_name.id_for_label }}">Имя</label>
+                        {{ resume_form.first_name }}
+                        {% if resume_form.first_name.errors %}
+                        <div class="error">{{ resume_form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label for="{{ resume_form.middle_name.id_for_label }}">Отчество</label>
+                        {{ resume_form.middle_name }}
+                        {% if resume_form.middle_name.errors %}
+                        <div class="error">{{ resume_form.middle_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Остальные поля основной информации -->
+                {% for field in resume_form %}
+                    {% if field.name not in 'last_name,first_name,middle_name' %}
+                    <div class="form-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Образование -->
+        <div class="resume-section">
+            <h2 class="section-title">2. Образование</h2>
+            <div id="education-forms">
+                {{ education_formset.management_form }}
+                {% for form in education_formset %}
+                <div class="education-form">
+                    {% for field in form %}
+                    <div class="form-field">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="add-form" data-form-type="education">+ Добавить образование</button>
+        </div>
+        
+        <!-- Опыт работы -->
+        <div class="resume-section">
+            <h2 class="section-title">3. Опыт работы</h2>
+            <div id="experience-forms">
+                {{ experience_formset.management_form }}
+                {% for form in experience_formset %}
+                <div class="experience-form">
+                    {% for field in form %}
+                    <div class="form-field">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="add-form" data-form-type="experience">+ Добавить место работы</button>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="save-button">Сохранить резюме</button>
+            <a href="{% url 'profile' %}" class="cancel-button">Отмена</a>
+        </div>
+    </form>
+</div>
+
+<script>
+// JavaScript для динамического добавления форм
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-form').forEach(button => {
+        button.addEventListener('click', function() {
+            const formType = this.dataset.formType;
+            const formContainer = document.getElementById(`${formType}-forms`);
+            const totalForms = document.getElementById(`id_${formType}-TOTAL_FORMS`);
+            const formNum = parseInt(totalForms.value);
+            
+            // Клонируем первую форму
+            const newForm = formContainer.querySelector(`.${formType}-form`).cloneNode(true);
+            
+            // Обновляем индексы полей
+            newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formNum}-`);
+            newForm.innerHTML = newForm.innerHTML.replace(/\[\d+\]/g, `[${formNum}]`);
+            
+            // Очищаем значения
+            newForm.querySelectorAll('input, select, textarea').forEach(field => {
+                field.value = '';
+                if (field.type === 'checkbox') field.checked = false;
+            });
+            
+            // Добавляем новую форму
+            formContainer.appendChild(newForm);
+            totalForms.value = formNum + 1;
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,329 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Профиль компании: {{ company.name }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/company_profile.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(186, 222, 239);
+}
+.bg-blue-200.py-8{
+    background-color: rgb(186, 222, 239);
+}
+a{
+    text-decoration: none;
+    color:#393B3B
+}
+.logo {
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: bold;
+    color: #0983C8;
+    margin-left: 20px;
+    text-decoration: none;
+}
+.logo:hover{
+    text-decoration: none;
+}
+.profile-photo {
+    flex-shrink: 0;
+}
+.photo-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.nav {
+    display: flex;
+    gap: 16px;
+    color: #393B3B;
+    margin-left: 50px;
+}
+.nav a {
+    font-family: Inter;
+    text-decoration: none;
+    color: inherit;
+}
+.nav a:hover {
+    color: #393B3B;
+}
+.LK {
+    margin-right: 40pt;
+    background: #F4F5F9;
+    border-radius: 999px;
+}
+.link-to-chats {
+    background: #F4F5F9;
+    padding: 5px;
+    border-radius: 999px;
+}
+.links-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.company-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.company-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.company-info {
+    flex: 1;
+}
+
+.company-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.company-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-item i {
+    color: #64748b;
+    width: 20px;
+    text-align: center;
+}
+
+.bio-section {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin: 2rem 0;
+}
+
+.bio-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.bio-text {
+    color: #334155;
+    line-height: 1.7;
+}
+
+.vacancies-section {
+    margin: 2rem 0;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.vacancies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.vacancy-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vacancy-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vacancy-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.vacancy-salary {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.vacancy-link {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.vacancy-link:hover {
+    text-decoration: underline;
+}
+
+.message-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.message-button:hover {
+    background-color: #1d4ed8;
+    color: white;
+}
+
+.empty-state {
+    background-color: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .company-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .vacancies-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<div class="profile-container">
+    <div class="company-header">
+        
+        <div class="company-info">
+            <div class="profile-photo">
+                <div class="photo-container">
+                {% if form.instance.photo %}
+                    <img src="{{ form.instance.photo.url }}" alt="Текущее фото" id="photo-preview">
+                {% else %}
+                    <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            <h1 class="company-name">{{ company.name }}</h1>
+            
+            <div class="company-details">
+                <div class="detail-item">
+                    <i class="fas fa-phone"></i>
+                    <span>{{ company.phone|default:"Телефон не указан" }}</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>{{ company.user.email }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bio-section">
+        <h2>О компании</h2>
+        <p class="bio-text">{{ company.bio|default:"Описание компании отсутствует" }}</p>
+    </div>
+    
+    <div class="vacancies-section">
+        <h2 class="section-title">Вакансии компании</h2>
+        
+        {% if vacancies %}
+            <div class="vacancies-list">
+                {% for vacancy in vacancies %}
+                    <div class="vacancy-card">
+                        <h3 class="vacancy-title">{{ vacancy.title }}</h3>
+                        <p class="vacancy-salary">{{ vacancy.salary }} ₽</p>
+                        <a href="{% url 'vacancy_detail' vacancy.id %}" class="vacancy-link">
+                            Подробнее о вакансии <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>У компании пока нет активных вакансий</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    {% if not is_company %}
+        <a href="{% url 'chat' company.user.id %}" class="message-button">
+            <i class="fas fa-envelope"></i> Написать компании
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

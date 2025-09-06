@@ -1,0 +1,732 @@
+
+/* Основные стили */
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Кнопка "Назад" */
+
+/* Добавьте в конец файла lk.css */
+.main-content {
+    min-height: calc(100vh - 500px); 
+}
+
+/* Для футера */
+footer {
+    width: 100%;
+    background-color: rgb(186, 222, 239);
+    padding: 2rem 0;
+    margin-top: auto;
+}
+
+.container.mx-auto {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+.back-link:hover {
+    color: #2563eb;
+    cursor: pointer;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+
+/* Карточка профиля */
+.profile-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.profile-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.profile-photo {
+    flex-shrink: 0;
+}
+
+.photo-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.user-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Секции профиля */
+.profile-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-field {
+    margin-bottom: 1rem;
+}
+
+.info-field label {
+    display: block;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #1e293b;
+    padding: 0.75rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.bio {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Кнопки действий */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.edit-button, .logout-button, .message-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.resume-button{
+    background-color: #1fbb00;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+}
+
+
+.resume-button:hover {
+    background-color: #059669;
+    color: white;
+    text-decoration: none;
+}
+.edit-button {
+    background-color: #2365f1;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+    text-decoration: none;
+}
+
+.edit-button:hover {
+    background-color: #1d4ed8;
+    color: white;
+    text-decoration: none;
+}
+
+.logout-button {
+    background-color: #f8fafc;
+    color: #dc2626;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+}
+
+.logout-button:hover {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.message-button {
+    background-color: #10b981;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+}
+
+.message-button:hover {
+    background-color: #059669;
+    color: white;
+    text-decoration: none;
+}
+
+/* Карточка с откликами */
+.applications-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application-item {
+    padding: 1.25rem;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s ease;
+}
+
+.application-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.application-vacancy, .application-message, .application-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.application-vacancy i {
+    color: #3b82f6;
+}
+
+.application-message i {
+    color: #10b981;
+}
+
+.application-date i {
+    color: #64748b;
+}
+
+.vacancy-link {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.vacancy-link:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #cbd5e1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-info {
+        text-align: center;
+    }
+    
+    .photo-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .edit-button, .logout-button, .message-button {
+        justify-content: center;
+    }
+}
+
+/* Стили для резюме */
+.resumes-card {
+    margin-top: 30px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.resume-card {
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.resume-actions {
+    margin-top: 10px;
+}
+
+.resume-actions a {
+    margin-right: 15px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.resume-actions a:hover {
+    text-decoration: underline;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.create-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #3498db;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.resume-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.resume-link:hover h3 {
+    color: #3498db;
+}
+
+.skill-tag {
+    background: #e0f7fa;
+    color: #00838f;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.resume-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.resume-actions a {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+
+
+/* Добавьте эти стили в конец файла lk.css */
+
+/* Стили для карточек резюме */
+.resume-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.resume-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+.resume-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.resume-link h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
+}
+
+.resume-link:hover h3 {
+    color: #3b82f6;
+}
+
+.resume-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.resume-info p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.resume-info strong {
+    color: #334155;
+    font-weight: 500;
+}
+
+.skill-tag {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+    background-color: #bae6fd;
+    transform: scale(1.05);
+}
+
+.resume-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+}
+
+.resume-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.resume-actions a:hover {
+    transform: scale(1.1);
+}
+
+.resume-actions .edit-resume-button {
+    background-color: #3b82f6;
+}
+
+.resume-actions .edit-resume-button:hover {
+    background-color: #2563eb;
+}
+
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .resume-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .resume-actions {
+        justify-content: flex-start;
+    }
+}
+/* Добавьте эти стили в конец файла lk.css */
+
+.resumes-section {
+    margin-top: 2rem;
+}
+
+.resumes-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.info-group {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.info-group:last-child {
+    border-bottom: none;
+}
+
+.info-group-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.75rem;
+}
+
+.education-item, .experience-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+}
+
+
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Обновленные стили для кнопок действий резюме */
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Это выравнивает кнопки и заголовок по одной линии */
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.resume-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center; /* Выравнивание кнопок по вертикали */
+}
+
+.resume-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    height: 36px; /* Фиксированная высота */
+    box-sizing: border-box; /* Чтобы padding не влиял на высоту */
+}
+
+/* Стили для конкретных кнопок */
+.resume-actions .edit-resume-button {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.resume-actions .delete-button {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Иконки внутри кнопок */
+.resume-actions a i {
+    
+    font-size: 14px;
+}
+
+/* Эффекты при наведении */
+.resume-actions a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.resume-actions .edit-resume-button:hover {
+    background-color: #2563eb;
+}
+
+.resume-actions .delete-button:hover {
+    background-color: #dc2626;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .resume-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .resume-actions {
+        justify-content: flex-start;
+    }
+    
+    .info-group {
+        padding: 0.75rem;
+    }
+}
+/* Стили для резюме в один столбец */
+.resume-card.single-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.resume-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.resume-section {
+    margin-bottom: 25px;
+}
+
+.resume-section-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.resume-section-title i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+.resume-section-content {
+    padding-left: 30px;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px dashed #ddd;
+    margin: 15px 0;
+}
+
+.education-item, .experience-item {
+    margin-bottom: 15px;
+}
+
+.experience-description {
+    margin-top: 5px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+}
+

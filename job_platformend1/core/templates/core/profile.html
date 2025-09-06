@@ -1,0 +1,241 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{% if is_own_profile %}Мой профиль{% else %}Профиль пользователя: {{ profile.full_name }}{% endif %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/lk.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="main-content"> 
+<div class="profile-container">
+    <div class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <a onclick="goBack()">Назад</a>
+    </div>
+    
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-info">
+                <h1 class="profile-title">
+                    {% if is_own_profile %}Мой профиль{% else %}Профиль пользователя: {{ profile.full_name }}{% endif %}
+                </h1>
+                
+                <div class="info-field">
+                    <label>Имя</label>
+                    <div class="info-value">{{ profile.full_name }}</div>
+                </div>
+            </div>
+            
+            <div class="profile-photo">
+                <div class="photo-container">
+                    {% if form.instance.photo %}
+                    <img src="{{ form.instance.photo.url }}" alt="Текущее фото" id="photo-preview">
+                {% else %}
+                    <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="profile-section">
+            <h2 class="section-title">Личные данные</h2>
+            <div class="info-grid">
+                <div class="info-field">
+                    <label>Email</label>
+                    <div class="info-value">{{ profile.user.email }}</div>
+                </div>
+                
+                <div class="info-field">
+                    <label>Телефон</label>
+                    <div class="info-value">{{ profile.phone|default:"Не указан" }}</div>
+                </div>
+                
+                <div class="info-field">
+                    <label>Дата рождения</label>
+                    <div class="info-value">{{ profile.birth_date|default:"Не указана" }}</div>
+                </div>
+                
+                <div class="info-field full-width">
+                    <label>О себе</label>
+                    <div class="info-value bio">{{ profile.bio|default:"Не указано" }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            {% if is_company and not is_own_profile %}
+            <a href="{% url 'chat' profile.user.id %}" class="message-button">
+                <i class="fas fa-envelope"></i> Написать
+            </a>
+            {% endif %}
+
+            {% if is_own_profile %}
+                {% if not is_company %}
+                <a href="{% url 'resume_builder' %}" class="resume-button">
+                    <i class="fas fa-file-alt"></i> Создать резюме
+                </a>
+                {% endif %}
+                
+                <a href="{% url 'edit_profile' %}" class="edit-button">
+                    <i class="fas fa-edit"></i> Редактировать профиль
+                </a>
+                
+                <a href="{% url 'logout' %}"><button class="logout-button"><i class="fas fa-sign-out-alt"></i> Выйти из аккаунта</button></a>
+            {% endif %}
+        </div>
+    </div>
+    {% if is_own_profile %}
+    <div class="applications-card">
+        <h2 class="section-title">Отклики пользователя</h2>
+        
+        {% if applications %}
+        <div class="applications-list">
+            {% for application in applications %}
+            <a href="{% url 'vacancy_detail' application.vacancy.id %}" class="vacancy-link">
+            <div class="application-item">
+                <div class="application-vacancy">
+                    <i class="fas fa-briefcase"></i>
+                    {{ application.vacancy.title }}
+                </div>
+                <div class="application-message">
+                    <i class="fas fa-comment"></i>
+                    <span>{{ application.message }}</span>
+                </div>
+                <div class="application-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>{{ application.created_at|date:"d.m.Y H:i" }}</span>
+                </div>
+            </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="far fa-folder-open"></i>
+            <p>Пока нет откликов</p>
+        </div>
+        {% endif %}
+    </div>
+{% endif %}
+    {# Блок с резюме #}
+    {% if resumes %}
+    <div class="resumes-section">
+        <h2 class="section-title">Резюме</h2>
+        <div class="resumes-list">
+            {% for resume in resumes %}
+            <div class="resume-card single-column">
+                <div class="resume-header">
+                    <h3>{{ resume.profession }}</h3>
+                    {% if is_own_profile and not is_company %}
+                    <div class="resume-actions">
+                        <a href="{% url 'edit_resume' resume.id %}" class="edit-resume-button" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'delete_resume' resume.id %}" class="delete-button" title="Удалить">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="resume-content">
+                    <!-- Основная информация -->
+                    <div class="resume-section">
+                        <h4 class="resume-section-title">
+                            <i class="fas fa-user-circle"></i> Основная информация
+                        </h4>
+                        <div class="resume-section-content">
+                            <p><strong>ФИО:</strong> {{ resume.last_name }} {{ resume.first_name }} {{ resume.middle_name|default:"" }}</p>
+                            <p><strong>Дата рождения:</strong> {{ resume.birth_date|date:"d.m.Y" }}</p>
+                            <p><strong>Телефон:</strong> {{ resume.phone }}</p>
+                            <p><strong>Email:</strong> {{ resume.user.email }}</p>
+                            <p><strong>Пол:</strong> {{ resume.get_gender_display }}</p>
+                            <p><strong>Гражданство:</strong> {{ resume.citizenship }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Образование -->
+                    <div class="resume-section">
+                        <h4 class="resume-section-title">
+                            <i class="fas fa-graduation-cap"></i> Образование
+                        </h4>
+                        <div class="resume-section-content">
+                            {% if resume.educations.all %}
+                                {% for education in resume.educations.all %}
+                                <div class="education-item">
+                                    <p><strong>Образовательное учреждение: </strong>{{ education.institution }}</p>
+                                    <p><strong>Специализация:</strong> {{ education.specialization }}</p>
+                                    <p><strong>Годы обучения:</strong> {{ education.year_start }} - {{ education.year_end|default:"по настоящее время" }}</p>
+                                </div>
+                                {% if not forloop.last %}<hr class="section-divider">{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <p>Не указано</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Опыт работы -->
+                    <div class="resume-section">
+                        <h4 class="resume-section-title">
+                            <i class="fas fa-briefcase"></i> Опыт работы
+                        </h4>
+                        <div class="resume-section-content">
+                            {% if resume.work_experiences.all %}
+                                {% for experience in resume.work_experiences.all %}
+                                <div class="experience-item">
+                                    <p><strong>Компания: </strong>{{ experience.company }}</p>
+                                    <p><strong>Должность: </strong>{{ experience.position }}</p>
+                                    <p><strong>Годы работы:</strong> {{ experience.date_start|date:"m.Y" }} - {% if experience.currently_working %}по настоящее время{% else %}{{ experience.date_end|date:"m.Y" }}{% endif %}</p>
+                                    <p class="experience-description"><strong>Обязанности:</strong> {{ experience.responsibilities }}</p>
+                                    {% if experience.achievements %}
+                                    <p class="experience-description"><strong>Достижения:</strong> {{ experience.achievements }}</p>
+                                    {% endif %}
+                                </div>
+                                {% if not forloop.last %}<hr class="section-divider">{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <p>Не указано</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Навыки -->
+                    <div class="resume-section">
+                        <h4 class="resume-section-title">
+                            <i class="fas fa-tools"></i> Навыки
+                        </h4>
+                        <div class="resume-section-content">
+                            <div class="skills-container">
+                                {% if resume.skills %}
+                                    {% for skill in resume.skills_list %}
+                                    <span class="skill-tag">{{ skill }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>Не указаны</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% elif is_own_profile and not is_company %}
+    <div class="empty-state">
+        <i class="far fa-file-alt"></i>
+        <p>У вас пока нет резюме</p>
+        
+    </div>
+    {% endif %}
+</div>
+</div>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

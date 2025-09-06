@@ -1,0 +1,117 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Избранные вакансии{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="../../static/CSS/favorites.css">
+<link rel="stylesheet" href="../../static/CSS/search.css">
+<style>
+    .vacancy-actions form {
+        display: inline;
+    }
+    .vacancy-actions .favorite-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 1.2rem;
+    }
+    .vacancy-actions .favorite-button i {
+        color: #ccc;
+        transition: color 0.2s;
+    }
+    .vacancy-actions .favorite-button i.favorite {
+        color: #ff0000;
+    }
+</style>
+
+<div class="containerr">
+    <h1 style="font-size: 24pt;
+    font-weight: bold;
+    margin-bottom: 1.5rem;" class="favorite-title">Избранные вакансии</h1>
+    <div class="content-wrapper">
+    <div class="vacancies-list">
+        <div class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <a onclick="goBack()">Назад</a>
+        </div>
+        {% for favorite in favorites %}
+        <a href="{% url 'vacancy_detail' favorite.vacancy.id %}" class="vacancy-link">
+            <div class="vacancy-card">
+                <div class="vacancy-header">
+                    <div class="vacancy-info">
+                        <h2 class="vacancy-title">{{ favorite.vacancy.title }}</h2>
+                        <p class="salary">{{ favorite.vacancy.salary }} ₽</p>
+                        <span class="experience">Опыт 1-3 года</span>
+                        <p class="company">{{ favorite.vacancy.company }}</p>
+                    </div>
+                    
+                    {% if favorite.vacancy.photo %}
+                    <img src="{{ favorite.vacancy.photo.url }}" alt="Логотип компании {{ favorite.vacancy.company }}" class="company-logo">
+                    {% elif favorite.vacancy.company.photo %}
+                    <img src="{{ favorite.vacancy.company.photo.url }}" alt="Логотип компании {{ favorite.vacancy.company.name }}" class="company-logo">
+                    {% else %}
+                    <div class="profile-photo">
+                        <div class="photo-container">
+                    <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                    </div>
+                </div>
+            </div>
+                {% endif %}
+                </div>
+                <div class="tags-container">
+                    {% for tag in favorite.vacancy.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+                <div class="vacancy-actions">
+                    <a href="{% url 'apply_for_vacancy' favorite.vacancy.id %}" class="apply-button">Откликнуться</a>
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'remove_from_favorite' favorite.vacancy.id %}" class="favorite-form">
+                            {% csrf_token %}
+                            <button type="submit" class="action-button favorite-button">
+                                <i class="fas fa-heart favorite"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обработка удаления из избранного через AJAX
+        document.querySelectorAll('.favorite-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const form = this;
+                const url = form.getAttribute('action');
+                const csrfToken = form.querySelector('[name=csrfmiddlewaretoken]').value;
+                const icon = form.querySelector('i.fas.fa-heart');
+                
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Удаляем карточку вакансии из DOM
+                        form.closest('.vacancy-card').remove();
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

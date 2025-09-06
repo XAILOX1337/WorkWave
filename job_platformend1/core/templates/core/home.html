@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkWave</title>
+    <link rel="stylesheet" href="../../static/CSS/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../static/JS/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Добавляем иконку для мобильного меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="logo">
+    <a href=""><div id="logo1" class="logo">WORKWAVE</div></a>
+    <a href=""><div class="logo">WORKWAVE</div></a>
+</div>
+
+    <header class="background-area">
+        
+        
+        
+        
+        <div class="menu">
+    
+        <a href="{% url 'home' %}#categories">Категории</a>
+        <a href="{% url 'home' %}#how_it_works">Как это работает</a>
+    
+    <a href="{% url 'home' %}#partners">Партнеры</a>
+    <a href="{% url 'home' %}#FAQ">FAQ</a>
+</div>
+
+        <div class="main_text">
+            <p>
+                Подбери <span class="highlight_text">идеальную</span> вакансию за <br> считанные минуты. <span class="highlight_text">Ты — в центре</span> <br> карьерных возможностей!
+            </p>
+        </div>
+        <form method="get" action="{% url 'vacancy_list' %}" class="search-container">
+            <i id="lupa" class="fas fa-search search-icon"></i><input type="text" name="query" placeholder="Поиск по названию или описанию" value="{{ query }}" class="search-input">
+            <button type="submit" class="search-button">Найти</button>
+        </form>
+        
+    </header>
+    <div id="categories" class="stats-container1">
+        <div class="stat">
+            <h2>769</h2>
+            <p>резюме</p>
+        </div>
+        <a href="{% url 'vacancy_list' %}">
+        <div class="stat">
+            <h2>782</h2>
+            <p>вакансий</p>
+        </div></a>
+        
+        <div class="stat">
+            <h2>363</h2>
+            <p>компаний</p>
+        </div>
+    </div>
+</div>
+    
+    
+    <div class="button-container">
+        {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                    <div class="links-container">
+                        <!-- Для суперпользователя показываем только админ-панель и выход -->
+                        
+                            <a class="nav-link" href="{% url 'admin:index' %}">Админ-панель</a>
+                        </li>
+                        
+                            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                    
+                    </div>
+                    {% else %}
+                        
+                        <div class="links-containerr">
+                          <div class="link-to-chats">
+                            <a href="{% url 'chat_list' %}" ><img src="../../static/Image/chat-icon.png"  width="50px" alt="Чаты"></a>
+                          </div>
+                    {% if user.is_company %}
+                          <div class="LK">
+                              <a href="{% url 'company_profile' %}"><img src="../../static/Image/user-profile.png"  width="50px" alt="Личный кабинет"></a>
+                          </div>
+                        {% else %}
+                        <div class="LK">
+                            <a href="{% url 'profile' %}"><img src="../../static/Image/user-profile.png"  width="50px" alt="Личный кабинет"></a>
+                        </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <!-- Для неавторизованных пользователей -->
+                    <div class="links-container">
+
+                        <a class="nav-link" href="{% url 'login' %}">Авторизация</a>
+
+                        <a class="nav-link" href="{% url 'register_user' %}">Регистрация</a>
+
+                    </div>
+
+                {% endif %}
+                
+    </div>
+    <div id="categories" class="stats-container2">
+        <div class="stat">
+            <h2>769</h2>
+            <p>резюме</p>
+        </div>
+        <a href="{% url 'vacancy_list' %}"><div class="stat">
+            <h2>782</h2>
+            <p>вакансий</p>
+        </div></a>
+        
+        <div class="stat">
+            <h2>363</h2>
+            <p>компаний</p>
+        </div>
+    </div>
+    
+    
+    
+<h1 class="main_title">Последние вакансии</h1>
+
+<div class="vacations-of-the-day">
+    {% for vacancy in latest_vacancies %}
+    <div class="vacation-of-the-day">
+        <a href="{% url 'vacancy_detail' vacancy.id %}" class="vacancy-link">
+            <div class="vacation-of-the-day-header"></div>
+            <h3>{{ vacancy.title }} <br> <span class="salary">{{ vacancy.salary }} ₽</span></h3>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+        
+        
+        
+    </div>
+    <div id="how_it_works" class="a-more-vacations"><a href="{% url 'vacancy_list' %}">Ещё вакансии</a></div>
+    
+    <h1 class="main_title">Как это работает</h1>
+
+    <!-- Замените текущие блоки шагов на эти -->
+<div class="bg-blue-200 flex items-center justify-center how-it-works">
+    <div id="partners"  class="container mx-auto px-4 py-4 max-h-400">
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-10 md:space-y-0 h-full">
+            <!-- Step 1 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="bg-white rounded-full p-6 shadow-md"> <!-- Добавлен rounded-full -->
+                    <i class="fas fa-mouse-pointer text-blue-500 text-2xl"></i> <!-- Уменьшен размер иконки -->
+                </div>
+                <h3 class="text-lg font-semibold mt-4">Выберите вакансию</h3>
+                <p class="text-gray-600 mt-2">Найдите предложение, которое идеально соответствует вашим профессиональным целям</p>
+            </div>
+            <!-- Dotted Line -->
+            <div class="hidden md:block w-16 border-t-8 border-dotted border-blue-500"></div>
+            <!-- Step 2 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="bg-white rounded-full p-6 shadow-md">
+                    <i class="fas fa-id-card text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mt-4">Отправьте свое резюме</h3>
+                <p class="text-gray-600 mt-2">Заявите о себе, отправьте резюме всего за пару минут</p>
+            </div>
+            <!-- Dotted Line -->
+            <div class="hidden md:block w-16 border-t-8 border-dotted border-blue-500"></div>
+            <!-- Step 3 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="bg-white rounded-full p-6 shadow-md">
+                    <i class="fas fa-comments text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mt-4">Пройдите онлайн - собеседование</h3>
+                <p class="text-gray-600 mt-2">Проведите беседу с работодателем, не выходя из дома</p>
+            </div>
+            <!-- Dotted Line -->
+            <div class="hidden md:block w-16 border-t-8 border-dotted border-blue-500"></div>
+            <!-- Step 4 -->
+            <div class="flex flex-col items-center text-center">
+                <div class="bg-white rounded-full p-6 shadow-md">
+                    <i class="fas fa-check-circle text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mt-4">Устройтесь на работу</h3>
+                <p class="text-gray-600 mt-2">Заключите договор и начните работать удаленно</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Наши партнеры -->
+<h1 class="main_title">Наши партнеры</h1>
+<div class="partners-original">
+    
+    <div class="partners-content">
+        <img src="../../static/Image/fsi.SVG" alt="Фонд содействия инновациям" class="partner-logo-original">
+        
+        <div class="partner-text-original">
+            <p>Проект создан при поддержке Федерального государственного бюджетного учреждения "Фонд содействия развитию малых форм предприятий в научно-технической сфере в рамках программы "Студенческий стартап" федерального проекта "Платформа университетского технологического предпринимательства".</p>
+        </div>
+        
+        <img src="../../static/Image/vgtu.svg" alt="ВГТУ" class="partner-logo-original1">
+    </div>
+</div>
+    
+    <div class="faq-container" id="FAQ">
+        <h1>Часто задаваемые вопросы</h1>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer1')">Как устроиться на удалённую работу?</div>
+            <div id="answer1" class="faq-answer">
+                <ol class="list-decimal">
+                    <li>Подумайте о том, какие навыки у вас есть и в каких областях вы можете работать. Это могут быть IT, маркетинг, копирайтинг, дизайн и другое.</li>
+                    <li>Подготовьте актуальное резюме, которое подчеркнет ваши ключевые навыки и опыт. Если у вас есть портфолио, обязательно добавьте его.</li>
+                    <li>Начинайте подавать заявки на интересующие вакансии.</li>
+                    <li>Будьте готовы к видеособеседованиям. Подготовьтесь заранее, чтобы показать себя с лучшей стороны.</li>
+                </ol>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer2')">Как правильно заполнить резюме?</div>
+            <div id="answer2" class="faq-answer">
+                <p>Для правильного заполнения резюме, следуйте этим шагам: укажите свои контактные данные, опишите свой опыт работы, образование и навыки. Не забудьте добавить достижения и рекомендации.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer3')">Как выбрать вакансию?</div>
+            <div id="answer3" class="faq-answer">
+                <p>При выборе вакансии, обратите внимание на требования к кандидату, условия работы и возможности для профессионального роста. Сравните несколько предложений и выберите наиболее подходящее.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer4')">Что от меня требуется перед собеседованием?</div>
+            <div id="answer4" class="faq-answer">
+                <p>Перед собеседованием подготовьте резюме, изучите информацию о компании, продумайте ответы на возможные вопросы и подготовьте свои вопросы к работодателю.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer5')">Что меня ждёт после собеседования?</div>
+            <div id="answer5" class="faq-answer">
+                <p>После собеседования вам могут предложить пройти дополнительные этапы отбора, такие как тестовые задания или второе интервью. Если вы успешно пройдете все этапы, вам предложат работу.</p>
+            </div>
+        </div>
+    </div>
+
+    
+        <footer class="bg-blue-200 py-8">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+             
+                <div class="logo-container">
+                    <a href="{% url 'home' %}" class="logo-link">
+                        <span class="logo-shadow">WORKWAVE</span>
+                        <span class="logo-main">WORKWAVE</span>
+                    </a>
+                </div>
+            
+             <div class="flex flex-col md:flex-row text-center ">
+              <div class="md:mr-8 mb-4 md:mb-0">
+               <h3 class="font-semibold">
+               Полезное
+               </h3>
+               <ul>
+                <li>
+                 <a href="{% url 'vacancy_list' %}">Посмотреть вакансии</a>
+                </li>
+                <li>
+                 <a href="{% url 'create_vacancy' %}">Разместить вакансию</a>
+                </li>
+                <li>
+                 <a href="{% url 'answers' %}">Вопрос-ответ</a>
+                </li>
+               </ul>
+              </div>
+              <div class="md:mr-8 mb-4 md:mb-0">
+               <h3 class="font-semibold">
+                Для компаний:
+               </h3>
+               <ul>
+                <li>
+                 <a href="{% url 'conf' %}">Политика конфиденциальности</a>
+                </li>
+                <li>
+                 <a href="{% url 'politics' %}">Пользовательское соглашение</a>
+                </li>
+                <li>
+              <a href="{% url 'personal_data' %}">Согласие на обработку персональных данных</a>
+             </li>
+                
+               </ul>
+              </div>
+              <div class="flex flex-col items-center ">
+               <h3 class="font-semibold mb-2">
+                Связь с нами
+               </h3>
+               <div class="flex space-x-4">
+                <a href="#">
+                 <img alt="VK icon" height="30" src="{% static 'Image/vk.png' %}" width="30"/>
+                </a>
+                <a href="#">
+                 <img alt="Telegram icon" height="30" src="{% static 'Image/tg.png' %}" width="30"/>
+                </a>
+               </div>
+              </div>
+             </div>
+            </div>
+            <div class="container mx-auto text-center mt-8">
+             <hr class="border-gray-300"/>
+             <p class="text-gray-600 mt-4">
+              ООО "РаВо" © 2025
+             </p>
+            </div>
+           </footer>
+       
+</body>
+</html>

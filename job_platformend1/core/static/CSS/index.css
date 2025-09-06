@@ -1,0 +1,965 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+    background: #F4F5F9;
+    overflow-x:hidden;
+}
+.logo {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.logo-container {
+    margin-top: 25pt;
+    margin-left: 10px;
+    text-decoration: none !important;
+}
+
+.logo-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none !important;
+}
+
+.logo-shadow, .logo-main {
+    font-family: Inter;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 1;
+    display: block;
+    text-decoration: none !important;
+}
+
+.logo-shadow {
+    color: #0983C8;
+    position: relative;
+    left: 3px;
+    text-decoration: none !important;
+}
+.logo-main {
+    color: #ffffff;
+    position: relative;
+    top: -1.05em;
+    text-decoration: none;
+}
+.logo-main:hover{
+    text-decoration: none;
+}
+.logo-shadow:hover{
+    text-decoration: none;
+}
+#logo1{
+    position: absolute;
+    top: 5px;
+    left: 25px;
+    font-size: 36px;
+    font-weight: bold;
+    color: #0983C8;
+    z-index: 1;
+}
+/* Обновленные стили для кнопок в шапке */
+.button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.links-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.partners-original {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 40px 0;
+    margin: 40px 0px 0px 170px;
+    margin-right: 140pt;
+    
+}
+
+.partners-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1800px;
+    min-width: 300pt;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 50px;
+    border: 1px solid #393B3B;
+    border-radius:  10px;
+}
+
+.partner-logo-original {
+    height: 150px;
+    order: 1;
+}
+.partner-logo-original1 {
+    height: 200px;
+    order: 3;
+}
+.text-gray-600.mt-2{
+    max-width: 300pt;
+}
+.partner-text-original {
+    max-width: 700px;
+    text-align: center;
+    font-family: 'Manrope', sans-serif;
+    color: #393B3B;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 40px;
+    order: 2;
+}
+
+.stats-container1 {
+    width: fit-content;
+    position:relative;
+    bottom: 100pt;
+    left: 10pt;
+    display: flex;
+    gap: 40px;
+    z-index: 3; /* Чтобы был поверх других элементов */
+    margin: 0; /* Убираем старый margin */
+}
+.stats-container2 {
+    position: relative;
+    justify-content: center;
+    display: none;
+    gap: 40px;
+    z-index: 3; /* Чтобы был поверх других элементов */
+    margin: 0; /* Убираем старый margin */
+}
+/* Добавьте эти стили в ваш index.css */
+
+/* Шаги получения работы - круглые значки */
+.bg-blue-200 .bg-white {
+    border-radius: 50%; /* Делаем круглыми */
+    width: 80px; /* Фиксированная ширина */
+    height: 80px; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Убираем padding, так как теперь фиксированный размер */
+    margin: 0 auto; /* Центрируем */
+}
+
+/* Уменьшаем размер иконок для лучшего соответствия */
+.bg-blue-200 .text-blue-500 {
+    font-size: 2rem; /* Уменьшаем с 4xl (2.25rem) до 2rem */
+}
+
+
+.link-to-chats, .LK {
+    
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.link-to-chats:hover, .LK:hover {
+    transform: scale(1.05);
+}
+
+.link-to-chats img, .LK img {
+    width: 50px;
+    height: 50px;
+}
+
+
+    
+/* Обновленные стили для кнопок авторизации и регистрации */
+.links-containerr {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; /* Позволяет кнопкам переноситься на маленьких экранах */
+    justify-content: flex-end;
+}
+
+.nav-link {
+    font-family: Inter;
+    background-color: #5ACAF9;
+    color: #F4F5F9;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    
+    text-align: center;
+    flex: 1 1 auto; /* Позволяет кнопкам растягиваться и сжиматься */
+    min-width: 100px; /* Минимальная ширина кнопки */
+}
+
+.nav-link:hover {
+    background-color: #2195c7;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #F4F5F9;
+    border-radius: 12px;
+    z-index: 1;
+    margin-left: 10pt;
+}
+.icon {
+    font-size: 24px;
+    color: #393B3B;
+    z-index: 1;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 1;
+    align-items: center;
+    padding: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    font-family: Inter;
+    color: #ffffff;
+    z-index: 1;
+    white-space: nowrap; 
+}
+
+.reg_button {
+    font-family: Inter;
+    background-color: #0983C8;
+    color: #F4F5F9;
+    border: none;
+    padding: 12px 40px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.reg_button:hover {
+    background-color: #5ACAF9;
+}
+
+
+
+/* Черный блюр с сохранением формы */
+.background-area::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit;
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-position: center;
+    
+    filter:  brightness(0.65) blur(3px); 
+    z-index: 0;
+    
+    
+    border-radius: 20px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.background-area {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;/* Добавлено */
+    height: 930px; /* подумать */
+    background-image: url('../Image/fon_bg2.png');
+    mask-image: url('../Image/mask.png');
+    mask-size:cover; 
+    mask-repeat: no-repeat;/* Растягивает фон на всю область */
+    background-position: center;
+    background-repeat: no-repeat; /* Предотвращает дублирование */
+    padding: 20px;
+    color: #F4F5F9;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    margin: 5pt;
+}
+/* Маска для сохранения круглых углов */
+.background-area::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    z-index: 1;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    
+}
+
+/* Для контента внутри хедера */
+.background-area > *:not(::before):not(::after) {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+.main_text {
+    margin-top: 150pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.main_text p {
+    font-size: 60px;
+    font-family: 'Inter', sans-serif;
+    color: #f0f0f0;
+    line-height: 1.5;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+}
+.highlight_text {
+    color: #0983C8;
+    font-size: 60px;
+    font-family: Inter;
+    text-align: center;
+    z-index: 1;
+}
+.search-container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #F4F5F9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+.search-container input {
+    color: #393B3B;
+    padding: 10px 10px 10px 40px;
+    outline: #F4F5F9;
+    outline-offset: #F4F5F9;
+    font-size: 16px;
+    border: 1px solid #393B3B;
+    border-radius: 5px;
+    margin-right: 10px;
+    height: 36pt;
+    width: 500px;
+    z-index: 1;
+}
+.search-container button {
+    padding: 10px 40px;
+    font-size: 16px;
+    background-color: #0983C8;
+    color: #F4F5F9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 36pt;
+    z-index: 1;
+}
+.search-icon {
+    position: relative;
+    left: 40px;
+    margin-right: 10px;
+    color: #393B3B;
+    z-index: 2;
+}
+
+.stat {
+    background: #5ACAF9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 185pt;
+    min-width: 100pt;
+}
+.stat h2 {
+    margin: 0;
+    font-size: 24px;
+    font-family: Manrope;
+    color: #F4F5F9;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 55px;
+    letter-spacing: 5%;
+}
+.stat p {
+    font-family: Manrope;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 5%;
+    margin: 0;
+    font-size: 18px;
+    color: #F4F5F9;
+}
+.main_title {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Inter;
+    color: #393B3B;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 5%;
+}
+.vacations-of-the-day {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.a-more-vacations {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 50px; /* Фиксированная высота */
+}
+.a-more-vacations a {
+    padding: 10px 20px;
+    background: #3B82F6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.a-more-vacations a:hover {
+    background: #2a2c2c;
+}
+.vacation-of-the-day {
+    flex: 0 0 calc(16% - 10px);
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    height: 200px; /* Фиксированная высота для карточки вакансии */
+    display: flex;
+    flex-direction: column;
+}
+.vacation-of-the-day h3 {
+    font-family: Manrope;
+    margin-top: 0;
+    margin-bottom: 15pt;
+    font-size: 20px;
+    color: #393B3B;
+    padding: 10px;
+    border: 1px solid #393B3B;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    text-align: left;
+    line-height: 27px;
+    letter-spacing: 5%;
+    height: 100px; /* Фиксированная высота для заголовка */
+    overflow: hidden; /* Скрываем текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляем многоточие если текст не помещается */
+}
+
+@media (max-width: 576px) {
+    .vacation-of-the-day {
+        flex: 0 0 100%; /* 1 карточка в ряд */
+        height: auto; /* Автовысота */
+        padding: 5px;
+        margin-bottom: 15px;
+    }
+    .vacation-of-the-day h3 {
+        font-size: 16px;
+        padding: 5px;
+    }
+    .vacations-of-the-day {
+        gap: 10px; /* Уменьшаем отступы */
+    }
+}
+.salary {
+    font-family: Manrope;
+    font-size: 16px;
+    margin-top: 0px;
+    color: #393B3B;
+    line-height: 22px;
+    letter-spacing: 5%;
+}
+.vacation-of-the-day-header {
+    background: #BADEEF;
+    color: #F4F5F9;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.faq-container {
+    margin: 0 auto;
+}
+.faq-container h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    margin-top: 24px;
+    margin-left: 24px;
+}
+.faq-item {
+    background-color: #F4F5F9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 12pt;
+}
+.faq-question {
+    border-bottom: 1px solid #BADEEF;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #393B3B;
+    cursor: pointer;
+}
+.faq-answer {
+    padding: 16px;
+    display: none;
+    color: #393B3B;
+}
+.list-decimal {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+
+.inline-menu-items {
+    display: flex;
+    gap: 20px;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 1700px) {
+    .menu {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .inline-menu-items {
+        display: flex;
+        gap: 20px;
+        
+        justify-content: center;
+    }
+}
+
+
+@media (max-width: 8000px) {
+    .background-area{
+        height: 1000px;
+        
+    }
+    .stats-container2{
+        top: 30pt;
+        display: flex;
+    }
+    .stats-container1{
+        display: none;
+
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+@media (max-width: 4096px) {
+    .background-area{
+        height: 1850px;
+        
+    }
+    
+    .stats-container2{
+        top: 0pt;
+        display: none;
+    }
+    .stats-container1{
+        display: flex;
+        bottom: 190pt;
+        gap: 80px
+    }
+    .stat{
+        padding: 40px;
+        width: 370pt;
+        
+    }
+    .stat h2{
+        font-size: 40pt;
+        line-height: 90px;
+    }
+    .stat p{
+        font-size: 40pt;
+        line-height: 70px;
+    }
+    
+}
+@media (max-width: 3096px) {
+    .background-area{
+        height: 1390px;
+        mask-image: url('../Image/mask.svg');
+    }
+    
+    
+    .stats-container2{
+        top: 0pt;
+        display: none;
+    }
+    .stats-container1{
+        display: flex;
+    }
+    .nav-link{
+        width:130px ;
+    }
+    .stats-container1{
+        bottom: 140pt;
+        gap: 80px
+    }
+    .stat{
+        padding: 30px;
+        width: 265pt;
+        line-height: 50px;
+        
+    }
+    .stat h2{
+        font-size: 24pt;
+        line-height: 55px;
+    }
+    .stat p{
+        font-size: 18pt;
+        line-height: 55px;
+    }
+}
+
+
+@media (max-width: 1920px) {
+    .background-area {
+        height: 930px;
+        background-image: url('../Image/fon_bg.png');
+        mask-image: url('../Image/mask.svg');
+        clip-path: none;
+    }
+    .stats-container1{
+        display: flex;
+    }
+    
+    .stats-container2{
+        top: 0pt;
+        display: none;
+    }
+    .stats-container1{
+        bottom: 100pt;
+        gap: 40px
+    }
+    .stat{
+        padding: 20px;
+        width: 185pt;
+        line-height: 30px;
+        min-width: 100pt;
+        gap: 20px
+    }
+    .stat h2{
+        font-size: 24pt;
+        line-height: 40px;
+    }
+    .stat p{
+        font-size: 18pt;
+        line-height: 40px;
+    }
+}
+@media (max-width: 1700px) {
+    .nav-link {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        padding: 5px 5px;
+        border-radius: 5px;
+        background: #5ACAF9;
+        border: #0983C8;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+        
+    }
+    
+    .nav-link:hover {
+        background: rgba(9, 131, 200, 1);
+    }
+    .menu{
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .main_text p, .highlight_text{
+        font-size: 40pt;
+    }
+    .main_text{
+        margin-top:80pt;
+    }
+    
+}
+@media (max-width: 1500px) {
+/* Обновленные стили для .background-area */
+.background-area {
+    height: 725px;
+    background-image: url('../Image/fon_bg.png');
+    background-size: cover;
+    mask: url('../Image/mask1500.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    color: #F4F5F9;
+    border-radius: 20px;
+    
+    position: relative;
+    overflow: hidden;
+    margin: 5pt;
+}
+.stats-container1{
+    bottom: 80pt;
+}
+.stat p{
+    font-size: 20px;
+    line-height: 23px;
+}
+.link-to-chats img, .LK img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    
+}
+.stat h2{
+    line-height: 30px;
+    font-size: 25px;
+}
+.stat{
+    font-size: 10px;
+    width: 11.5rem
+}
+
+}
+/* Адаптация только при уменьшении */
+@media (max-width: 1200px) {
+
+    .background-area{
+        height: 545pt;
+    }
+    .partner-text-original{
+        margin-right: 0pt;
+    }
+    .partners-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .stat{
+        font-size: 10px;
+        width: 11.5rem
+    }
+    .nav-link {
+        padding: 10px 15px;
+        font-size: 15px;
+    }
+    .logo{
+        font-size: 20pt;
+        left: 10pt;
+    }
+    #logo1{
+        font-size: 20pt;
+        left: 13pt
+    }
+    
+    .partner-logo-original {
+        height: 100px;
+    }
+    
+    .partner-text-original {
+        order: 1;
+    }
+    
+    .partners-original {
+        padding: 30px 20px;
+        
+
+    }
+    .links-container {
+        flex-direction: column; /* Кнопки в столбик на очень маленьких экранах */
+        gap: 4px;
+        width: 100%;
+    }
+    .nav-link {
+        
+        font-size: 9px;
+        width: 30px;
+        
+    }
+}
+
+@media (max-width: 990px) {
+    .search-container input{
+        font-size: 10pt;
+        padding: 4pt 4pt 4pt 18pt;
+        height: 28pt;
+    }
+    .search-icon{
+        font-size: 10pt;
+        left:24pt
+    }
+    .search-container button{
+        padding: 4pt 20pt;
+        height: 28pt
+    }
+    .background-area{
+        height: 500pt;
+    }
+    .logo{
+        font-size: 14pt;
+        left: 7pt;
+    }
+    #logo1{
+        font-size: 14pt;
+        left: 10pt
+    }
+    .main_text p, .highlight_text{
+        font-size: 30pt;
+    }
+    .main_text{
+        margin-top:40pt;
+    }
+    .stats-container1{
+        display: none;
+    }
+    .stats-container2{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -100pt;
+        box-shadow: none;
+        gap: 0px
+    }
+    .stat{
+        background: none;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+        width: 100px;
+        padding: 0;
+        margin-bottom: 0px;
+    }
+    .stat p{
+        color: white;
+        font-size: 12pt;
+        line-height: 15px;
+    }
+    .stat h2{
+        line-height: 10px;
+        font-size: 14pt;
+        margin-bottom: 5pt;
+    }
+    .background-area{
+        height: 750px;
+        -webkit-mask-image: none;
+        mask-image: none;
+        
+    }
+}
+@media (max-width: 768px) {
+    .how-it-works{
+        font-size: 10pt;
+        height: 700pt;
+    }
+    .logo{
+        font-size: 10pt;
+        left: 7pt;
+    }
+    .menu{
+        top: 0pt;
+        font-size: 8pt;
+        gap: 15px;
+    }
+    #logo1{
+        font-size: 10pt;
+        left: 10pt
+    }
+    .bg-blue-200 .bg-white {
+        width: 60px;
+        height: 60px;
+    }
+    .links-container {
+        flex-direction: column; /* Кнопки в столбик на очень маленьких экранах */
+        gap: 4px;
+        width: 100%;
+    }
+    .bg-blue-200 .text-blue-500 {
+        font-size: 1.5rem;
+    }
+    
+    .main_title{
+        margin-top: 10pt;
+        font-size: 18pt
+    }
+    .main_text p, .highlight_text{
+        font-size: 12pt;
+    }
+    .background-area{
+        height: 500pt;
+    }
+    .background-area::before {
+        filter: brightness(0.65) blur(3px);
+    }
+     
+    .menu {
+        flex-direction: column; /* В столбик на мобильных */
+        gap: 5px;
+        padding: 10px 0;
+    }
+    
+    
+    
+    .menu a {
+        padding: 0px 0;
+        font-size: 16px; /* Увеличим шрифт для удобства на мобильных */
+    }
+    
+    
+}
+@media (max-width: 400px) {
+.background-area{
+        height: 500pt;
+    }
+    .links-container {
+        flex-direction: column; /* Кнопки в столбик на очень маленьких экранах */
+        gap: 4px;
+        width: 100%;
+    }
+}

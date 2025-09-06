@@ -1,0 +1,316 @@
+/* Основные стили для страницы редактирования профиля */
+.edit-profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    overflow-x:hidden;
+    }
+    
+    /* Заголовок страницы */
+    .edit-profile-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    }
+    
+    .edit-profile-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #4299e1, #3182ce);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+    }
+    
+    /* Карточка формы */
+    .edit-profile-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    }
+    
+    /* Секции формы */
+    .profile-section {
+    margin-bottom: 2.5rem;
+    }
+    
+    .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+    }
+    
+    .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 80px;
+    height: 2px;
+    background: #4299e1;
+    }
+    
+    /* Сетка полей формы */
+    .edit-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.75rem;
+    }
+    
+    /* Стили для полей формы */
+    .form-field {
+    margin-bottom: 1.75rem;
+    position: relative;
+    }
+    
+    .form-field label {
+    display: block;
+    font-size: 0.9375rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    }
+    
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+    }
+    
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    background-color: white;
+    }
+    
+    .form-field input:hover,
+    .form-field textarea:hover,
+    .form-field select:hover {
+    border-color: #cbd5e0;
+    }
+    
+    .form-field textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+    }
+    
+    /* Стили для загрузки фото */
+    .photo-upload {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        }
+        
+        .current-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        background-color: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+        
+        .current-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        }
+        
+        .upload-controls {
+        flex: 1;
+        cursor: pointer;
+        position: relative;
+        }
+        
+        .upload-btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background-color: #edf2f7;
+        color: #2d3748;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+        font-size: 0.9375rem;
+        }
+        
+        .upload-controls:hover .upload-btn {
+        background-color: #e2e8f0;
+        }
+        
+        
+        
+        .file-name {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #718096;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        }
+    
+  
+    
+   
+   
+  
+    
+    /* Кнопки действий */
+    .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    }
+    
+    .save-btn {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(50, 115, 220, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    }
+    
+    .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(50, 115, 220, 0.15);
+    background: linear-gradient(135deg, #3182ce, #2b6cb0);
+    }
+    
+    .cancel-btn {
+    background-color: white;
+    color: #4a5568;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    }
+    
+    .cancel-btn:hover {
+    background-color: #f7fafc;
+    border-color: #cbd5e0;
+    color: #2d3748;
+    }
+    
+    /* Сообщения об ошибках и подсказки */
+    .form-help {
+    display: block;
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    color: #718096;
+    line-height: 1.4;
+    }
+    
+    .form-error {
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    color: #e53e3e;
+    font-weight: 500;
+    }
+    
+    /* Анимации */
+    @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .edit-profile-card {
+    animation: fadeIn 0.4s ease-out forwards;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+    .edit-profile-container {
+    padding: 0 1rem;
+    }
+    
+    Copy
+    .edit-profile-card {
+        padding: 1.75rem 1.5rem;
+    }
+    
+    .edit-form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .photo-upload {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .action-buttons {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+    
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    }
+    
+    /* Специальные стили для чекбоксов и переключателей */
+    .checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    }
+    
+    .checkbox-field input[type="checkbox"] {
+    width: auto;
+    transform: scale(1.2);
+    }
+    
+    /* Стили для выпадающих списков */
+    .form-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+    }

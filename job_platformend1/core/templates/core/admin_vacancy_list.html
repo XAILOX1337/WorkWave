@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Модерация вакансий{% endblock %}
+
+{% block content %}
+    <h1>Вакансии на модерацию</h1>
+    <div class="vacancy-grid">
+        {% for vacancy in vacancies %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ vacancy.title }}</h5>
+                    <p class="card-text">{{ vacancy.salary }}</p>
+                    <p class="card-text">{{ vacancy.description }}</p>
+                    <a href="{% url 'approve_vacancy' vacancy.id %}" class="btn btn-success">Одобрить</a>
+                    <a href="{% url 'reject_vacancy' vacancy.id %}" class="btn btn-danger">Отклонить</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

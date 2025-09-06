@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ vacancy.title }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/vacancy_detail.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    
+</style>
+
+<div class="vacancy-detail-container">
+    <a href="{% url 'vacancy_list' %}" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Назад
+    </a>
+    
+    <div class="vacancy-detail-card">
+        <div class="vacancy-header">
+            <div>
+                <h1 class="vacancy-title">{{ vacancy.title }}</h1>
+                <p class="salary">{{ vacancy.salary }} ₽</p>
+                <p class="salary">Образование: {{ vacancy.education }}</p>
+                <p class="salary">Опыт работы: {{ vacancy.experience }}</p>
+                <p class="company-name">
+                    Компания: <a href="{% url 'company_profile' vacancy.company.id %}">{{ vacancy.company.name }}</a>
+                </p>
+                
+                <div class="tags-container">
+                    {% for tag in vacancy.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% if vacancy.photo %}
+                        <img src="{{ vacancy.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% elif vacancy.company.photo %}
+                        <img src="{{ vacancy.company.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% else %}
+                        <div class="profile-photo">
+                            <div class="photo-container">
+                        <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+        </div>
+        
+        <div class="description-section">
+            <h2 class="section-title">Описание вакансии</h2>
+            {% if vacancy.general_info %}
+            <h3 class="section-title">Общая информация</h3>
+            <p class="description-text">{{ vacancy.general_info }}</p>
+            {% endif %}
+            {% if vacancy.responsibilities %}
+            <h3 class="section-title">Чем предстоит заниматься</h3>
+            <p class="description-text">{{ vacancy.responsibilities }}</p>
+            {% endif %}
+            {% if vacancy.skills %}
+            <h3 class="section-title">Требуемые навыки</h3>
+            <p class="description-text">{{ vacancy.skills }}</p>
+            {% endif %}
+            {% if vacancy.ideal_candidate %}
+            <h3 class="section-title">Идеальный кандидат</h3>
+            <p class="description-text">{{ vacancy.ideal_candidate }}</p>
+            {% endif %}
+            {% if vacancy.we_offer %}
+            <h3 class="section-title">Что мы предлагаем</h3>
+            <p class="description-text">{{ vacancy.we_offer }}</p>
+            {% endif %}
+            
+        </div>
+        
+        <p class="published-date">Опубликовано: {{ vacancy.created_at|date:"d.m.Y" }}</p>
+        
+        <div class="actions-container">
+            
+                <a href="{% url 'apply_for_vacancy' vacancy.id %}" class="action-button apply-button">
+                    <i class="fas fa-paper-plane"></i> Откликнуться
+                </a>
+            
+            
+            {% if user.is_authenticated %}
+                {% if is_favorite %}
+                    <a href="{% url 'remove_from_favorite' vacancy.id %}" class="action-button favorite-button">
+                        <i class="fas fa-heart" style="color: #ff0000;"></i> В избранном
+                    </a>
+                {% else %}
+                    <a href="{% url 'add_to_favorite' vacancy.id %}" class="action-button favorite-button">
+                        <i class="far fa-heart"></i> В избранное
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if is_company %}
+    <div class="subscription-box">
+        <h3 class="subscription-title">Найдите быстрее сотрудников с нашей подпиской</h3>
+        <p>Что дает подписка:</p>
+        <ul class="subscription-features">
+            <li>Вакансия поднимается в ТОП поиска</li>
+            <li>Ваша вакансия выделяется среди других</li>
+            <li>Приоритетное отображение для соискателей</li>
+        </ul>
+        <button class="subscription-button">Подписаться</button>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

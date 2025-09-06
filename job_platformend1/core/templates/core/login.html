@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/login.css">
+
+<div class="login-form">
+    <div class="login-container">
+        <h2 class="title">Вход</h2>
+        
+        
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <input type="text" name="username" placeholder="Имя пользователя или Email" class="input-field" required>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Пароль" class="input-field" required>
+            </div>
+            <div class="link-container">
+                <a href="{% url 'password_reset_request' %}" class="link">Забыли пароль?</a>
+                <a href="{% url 'register_user' %}" class="link">Регистрация</a>
+            </div>
+            <button type="submit" class="submit-button">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

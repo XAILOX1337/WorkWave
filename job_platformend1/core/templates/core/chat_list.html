@@ -1,0 +1,51 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}Мои чаты{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/chats.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<div class="chat-list-container">
+    <div class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <a onclick="goBack()">Назад</a>
+    </div>
+    
+    <h1 class="page-title">Мои чаты</h1>
+    
+    <div class="chat-list">
+        {% if users %}
+            {% for user in users %}
+            <a href="{% url 'chat' user.id %}" class="chat-card">
+                <div class="chat-card-header">
+                    {% if receiver.profile.photo %}
+        <img src="{{ receiver.profile.photo.url }}" alt="Фото профиля" class="chat-avatar">
+    {% else %}
+        <div class="avatar-placeholder">
+            <i class="fas fa-user"></i>
+        </div>
+    {% endif %}
+                    <div class="chat-info">
+                        <h3 class="chat-user-name">{{ user.username }}</h3>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="far fa-comment-dots"></i>
+                <p>У вас пока нет чатов</p>
+                <p class="empty-state-hint">Начните общение с пользователями через вакансии</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,259 @@
+:root {
+    --primary-color: #4361ee;
+    --primary-hover: #3a56d4;
+    --secondary-color: #f8f9fa;
+    --text-color: #2b2d42;
+    --text-light: #6c757d;
+    --border-color: #e9ecef;
+    --error-color: #ef233c;
+    --success-color: #4cc9f0;
+    --tag-bg: #e0f2fe;
+    --tag-text: #0369a1;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --transition: all 0.2s ease;
+}
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.back-link:hover {
+    color: #2563eb;
+    cursor: pointer;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.create-vacancy-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.create-vacancy-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.create-vacancy-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.create-vacancy-header .subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.create-vacancy-card {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .form-field:last-child,
+    .form-field.wide-field {
+        grid-column: span 1;
+    }
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-label {
+    width:100%;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.required-star {
+    color: var(--error-color);
+    margin-left: 0.25rem;
+}
+
+input, textarea, select {
+    
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: white;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+select[multiple] {
+    height: auto;
+    padding: 0;
+}
+
+/* Общие стили для контейнера с тегами */
+.tags-selector {
+    display: flex; /* Используем flexbox для выравнивания */
+    flex-wrap: wrap; /* Позволяем тегам переноситься на новую строку */
+    gap: 10px; /* Отступы между тегами */
+    
+}
+
+/* Стили для текстбоксов тегов */
+.tag-input {
+    min-width: 150px; /* Минимальная ширина текстбокса */
+    max-width: 300px; /* Максимальная ширина текстбокса */
+    padding: 8px; /* Отступы внутри текстбокса */
+    border: 1px solid #ccc; /* Граница текстбокса */
+    border-radius: 4px; /* Закругленные углы */
+    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
+}
+
+/* Стили для кнопки добавления тега */
+.add-tag-button {
+    padding: 8px 12px; /* Отступы внутри кнопки */
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    border-radius: 4px; /* Закругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+/* Стили для кнопки при наведении */
+.add-tag-button:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+}
+/* Form validation */
+.has-error input,
+.has-error textarea,
+.has-error select,
+.has-error .tags-selector {
+    border-color: var(--error-color);
+}
+
+.error-text {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.help-text {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: white;
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.cancel-btn:hover {
+    background-color: #f1f3f5;
+    color: var(--text-color);
+}
+
+.submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* File input styling */
+input[type="file"] {
+    padding: 0.5rem;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-right: 1rem;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #e9ecef;
+}

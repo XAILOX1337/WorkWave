@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 72vh;
+    background-color: #f4f5f9;
+}
+
+.login-container {
+    background-color: #f4f5f9;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 30rem;
+    border: 1px solid #bfdbfe;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #374151;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+}
+
+.link-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.link {
+    color: #374151;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #60a5fa;
+    color: #ffffff;
+    padding: 0.75rem 0;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 0.875rem;
+}
+
+.submit-button:hover {
+    background-color: #3b82f6;
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #374151;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+}
+
+.search-button {
+    margin-right: 40px;
+}
+
+.button {
+    font-family: Inter;
+    background-color: #f4f5f9;
+    color: #4299E1;
+    padding: 12px 40px;
+    border-radius: 10px;
+    border: 1px solid #4299E1;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #4299E1;
+    color: #f4f5f9;
+}

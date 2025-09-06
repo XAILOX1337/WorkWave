@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WorkWave{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="{% static 'CSS/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}" class="logo-link">
+                <span class="logo-shadow">WORKWAVE</span>
+                <span class="logo-main">WORKWAVE</span>
+            </a>
+        </div>
+        {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                    <div class="links-container">
+                        <!-- Для суперпользователя показываем только админ-панель и выход -->
+                        
+                            <a class="nav-link" href="{% url 'admin:index' %}">Админ-панель</a>
+                        </li>
+                        
+                            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                    
+                    </div>
+                    {% else %}
+                        <!-- Для обычных пользователей и компаний -->
+                        <nav class="nav">
+                            <a href="{% url 'home' %}#categories">Категории</a>
+                            <a href="{% url 'home' %}#how_it_works">Как это работает</a>
+                            <a href="{% url 'home' %}#partners">Партнеры</a>
+                            <a href="{% url 'home' %}#FAQ">FAQ</a>
+                        </nav>
+                        <div class="links-container">
+                          <div class="link-to-chats">
+                            <a href="{% url 'chat_list' %}" ><img src="{% static 'Image/chat-icon.png' %}"  width="40px" alt="Чаты"></a>
+                          </div>
+                    {% if user.is_company %}
+                          <div class="LK">
+                              <a href="{% url 'company_profile' %}"><img src="{% static 'Image/user-profile.png' %}"  width="50px" alt="Личный кабинет"></a>
+                          </div>
+                        {% else %}
+                        <div class="LK">
+                            <a href="{% url 'profile' %}"><img src="{% static 'Image/user-profile.png' %}"  width="50px" alt="Личный кабинет"></a>
+                        </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <!-- Для неавторизованных пользователей -->
+                    <div class="links-container">
+
+                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
+
+                        <a class="nav-link"  href="{% url 'register_user' %}">Регистрация</a>
+
+                        
+
+                    </div>
+
+                {% endif %}
+      </header>
+    
+
+    
+
+        {% block content %}{% endblock %}
+
+        <footer class="bg-blue-200 py-8">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+             
+                <div class="logo-container">
+                    <a href="{% url 'home' %}" class="logo-link">
+                        <span class="logo-shadow">WORKWAVE</span>
+                        <span class="logo-main">WORKWAVE</span>
+                    </a>
+                </div>
+            
+             <div class="flex flex-col md:flex-row text-center md:text-left">
+              <div class="md:mr-8 mb-4 md:mb-0">
+               <h3 class="font-semibold">
+               Полезное
+               </h3>
+               <ul>
+                <li>
+                 <a href="{% url 'vacancy_list' %}">Посмотреть вакансии</a>
+                </li>
+                <li>
+                 <a href="{% url 'create_vacancy' %}">Разместить вакансию</a>
+                </li>
+                <li>
+                 <a href="{% url 'answers' %}">Вопрос-ответ</a>
+                </li>
+               </ul>
+              </div>
+              <div class="md:mr-8 mb-4 md:mb-0">
+               <h3 class="font-semibold">
+                Для компаний:
+               </h3>
+               <ul>
+                <li>
+                 <a href="{% url 'conf' %}">Политика конфиденциальности</a>
+                </li>
+                <li>
+                 <a href="{% url 'politics' %}">Пользовательское соглашение</a>
+                </li>
+                <li>
+              <a href="{% url 'personal_data' %}">Согласие на обработку персональных данных</a>
+             </li>
+                
+               </ul>
+              </div>
+              <div class="flex flex-col items-center md:items-start">
+               <h3 class="font-semibold mb-2">
+                Связь с нами
+               </h3>
+               <div class="flex space-x-4">
+                <a href="#">
+                 <img alt="VK icon" height="30" src="{% static 'Image/vk.png' %}" width="30"/>
+                </a>
+                <a href="#">
+                 <img alt="Telegram icon" height="30" src="{% static 'Image/tg.png' %}" width="30"/>
+                </a>
+               </div>
+              </div>
+             </div>
+            </div>
+            <div class="container mx-auto text-center mt-8">
+             <hr class="border-gray-300"/>
+             <p class="text-gray-600 mt-4">
+              ООО "РаВо" © 2025
+             </p>
+            </div>
+           </footer>
+    </div>
+    <script>
+        function goBack() {
+        window.history.back();
+    }
+      </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

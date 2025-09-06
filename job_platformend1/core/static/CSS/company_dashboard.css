@@ -1,0 +1,311 @@
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+    overflow-x:hidden;
+}
+.delete-button {
+    background-color: #ef4444;
+    color: white;
+    padding: 5pt;
+    border-radius: 5px;
+}
+.delete-button:hover {
+    background-color: #dc2626;
+    color: white
+}
+.containerr {
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.profile-photo {
+    flex-shrink: 0;
+}
+
+.photo-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+.back-link:hover {
+    color: #2563eb;
+    cursor: pointer;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+.user-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 1.5rem 0 1rem;
+}
+
+.company-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.vacancies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.vacancy-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.vacancy-link:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.vacancy-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e2e8f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.vacancy-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vacancy-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.vacancy-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #2563eb;
+}
+
+.vacancy-header .salary {
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.vacancy-header .experience {
+    color: #64748b;
+    font-size: 0.875rem;
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.vacancy-header .company {
+    color: #475569;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.vacancy-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.tag {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    max-height: 25pt;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.vacancy-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    
+    align-items: center;
+    
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    height: 36px; /* Фиксированная высота */
+    box-sizing: border-box; /* Чтобы padding не влиял на высоту */
+}
+
+
+.edit-button {
+    color: #2563eb;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.edit-button:hover {
+    background-color: #e0f2fe;
+    text-decoration: none;
+    color: #2563eb;
+}
+
+.add-vacancy-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0 2rem;
+    text-decoration: none;
+}
+
+.add-vacancy-button:hover {
+    background-color: #1d4ed8;
+    color: white;
+    text-decoration: none;
+}
+
+.applications-list {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin: 2rem 0;
+    border: 1px solid #e2e8f0;
+}
+
+.application-item {
+    padding: 1.25rem;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease;
+}
+
+.application-item:hover {
+    background-color: #f8fafc;
+}
+
+.application-item:last-child {
+    border-bottom: none;
+}
+
+.plain-link {
+    color: #2563eb;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.plain-link:hover {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.application-item p {
+    margin: 0.5rem 0;
+}
+
+.logout-button {
+    background-color: #f8fafc;
+    color: #dc2626;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+}
+
+.logout-button:hover {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .containerr {
+        padding: 1rem;
+    }
+    
+    .vacancies-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .vacancy-header {
+        flex-direction: column;
+    }
+    
+    .vacancy-logo {
+        align-self: flex-start;
+    }
+}

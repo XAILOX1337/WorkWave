@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Редактирование профиля{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="../../static/CSS/edit_profile.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"><div class="edit-profile-container"> <div class="back-link"> <i class="fas fa-arrow-left"></i> <a onclick="goBack()">Назад</a> </div>
+
+<div class="edit-profile-card">
+    <h1 class="edit-profile-title">Редактирование профиля</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="profile-edit-form">
+        {% csrf_token %}
+        
+        <!-- Секция с фото профиля -->
+        <div class="photo-upload">
+            <div class="current-photo">
+                {% if form.instance.photo %}
+                    <img src="{{ form.instance.photo.url }}" alt="Текущее фото" id="photo-preview">
+                {% else %}
+                    <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="upload-controls" id="upload-controls">
+                <span class="upload-btn">
+                    <i class="fas fa-camera"></i> 
+                    {{ form.photo }}
+                </span>
+                
+            </div>
+        </div>
+        
+        <!-- Основная информация -->
+        <div class="profile-section">
+            <h2 class="section-title">Основная информация</h2>
+            <div class="edit-form-grid">
+                {% for field in form %}
+                    {% if field.name != 'photo' and field.name != 'bio' %}
+                        <div class="form-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-help">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="form-error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Биография -->
+        <div class="profile-section">
+            <h2 class="section-title">О себе</h2>
+            <div class="form-field">
+                {{ form.bio }}
+                {% if form.bio.help_text %}
+                    <small class="form-help">{{ form.bio.help_text }}</small>
+                {% endif %}
+                {% for error in form.bio.errors %}
+                    <div class="form-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button type="submit" class="save-btn">
+                <i class="fas fa-save"></i> Сохранить изменения
+            </button>
+            <a href="{% url 'profile' %}" class="cancel-btn">
+                <i class="fas fa-times"></i> Отменить
+            </a>
+        </div>
+    </form>
+</div>
+</div><script> function goBack() { window.history.back(); } // Обработчик для открытия окна выбора файла при клике на upload-controls document.getElementById('upload-controls').addEventListener('click', function() { document.getElementById('id_photo').click(); }); // Показываем имя выбранного файла и превью document.getElementById('id_photo').addEventListener('change', function(e) { const fileInput = e.target; const fileNameElement = document.getElementById('file-name'); const photoPreview = document.getElementById('photo-preview'); if (fileInput.files && fileInput.files[0]) { // Обновляем имя файла fileNameElement.textContent = fileInput.files[0].name; // Обновляем превью фото const reader = new FileReader(); reader.onload = function(event) { let previewContainer = document.querySelector('.current-photo'); // Если превью уже существует, обновляем его if (photoPreview) { photoPreview.src = event.target.result; } // Иначе создаем новый элемент img else { previewContainer.innerHTML = ''; const img = document.createElement('img'); img.src = event.target.result; img.alt = 'Превью фото'; img.id = 'photo-preview'; previewContainer.appendChild(img); } }; reader.readAsDataURL(fileInput.files[0]); } else { fileNameElement.textContent = 'Фото не выбрано'; } }); </script>
+{% endblock %}

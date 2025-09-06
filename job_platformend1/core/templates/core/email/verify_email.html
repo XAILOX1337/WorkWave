@@ -1,0 +1,37 @@
+<!-- core/templates/core/email/verify_email.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Подтверждение email на {{ site_name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .code { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #2c3e50;
+            margin: 20px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            display: inline-block;
+        }
+        .footer { margin-top: 30px; font-size: 12px; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Подтверждение email</h2>
+        <p>Спасибо за регистрацию на {{ site_name }}!</p>
+        <p>Для завершения регистрации введите следующий код подтверждения:</p>
+        
+        <div class="code">{{ code }}</div>
+        
+        <p>Если вы не регистрировались на нашем сайте, пожалуйста, проигнорируйте это письмо.</p>
+        
+        <div class="footer">
+            <p>С уважением,<br>Команда {{ site_name }}</p>
+        </div>
+    </div>
+</body>
+</html>

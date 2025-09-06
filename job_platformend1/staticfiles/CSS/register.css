@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.register-form {
+            display: none; /* Скрываем все формы по умолчанию */
+        }
+ .register-form.active {
+    display: block; /* Показываем только активную форму */
+    background-color: #f4f5f9;
+ }
+ .center-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 650px; /* Занимает всю высоту экрана */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f5f9;
+}
+.register-container { 
+    background-color: #f4f5f9;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+    max-width: 44rem;
+    border: 1px solid #bfdbfe;
+}
+
+.title {
+    text-align: center;
+    font-family: Manrope;
+font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+.input-field {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+.link-container {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: underline;
+    font-size: 0.875rem;
+    margin-bottom: 1.0rem;
+}
+.link {
+    color: #374151;
+}
+.continue{
+    display: flex;
+            align-items: center;
+            justify-content: center;
+}
+.submit-button {
+    display: inline-block; /* Чтобы ссылка вела себя как кнопка */
+    width: 300px; /* Ширина кнопки */
+    background-color: #60a5fa; /* Цвет фона */
+    color: #f4f5f9; /* Цвет текста */
+    padding: 0.5rem 0; /* Внутренние отступы */
+    border-radius: 0.5rem; /* Закругление углов */
+    text-align: center; /* Выравнивание текста по центру */
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+.submit-button:hover {
+    background-color: #3b82f6; /* Цвет фона при наведении */
+}
+
+.terms-of-agreement p{
+    color: #374151;
+    color: rgb(111, 118, 108);
+    font-family: Manrope;
+    font-size: 10px;
+    margin-top: 10px;
+}
+i {
+    border: solid rgb(59, 183, 255);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+}
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.search-button {
+    margin-right: 40px;
+      
+  }
+  
+  .button {
+      font-family: Inter;
+  
+      background-color: #f4f5f9;
+      color: #4299E1;
+      padding: 12px 40px;
+      border-radius: 10px;
+      border: 1px solid #4299E1;
+      text-decoration: none;
+  }
+  .button:hover {
+      background-color: #4299E1;
+      color: #f4f5f9;
+  }
+ 
+
+

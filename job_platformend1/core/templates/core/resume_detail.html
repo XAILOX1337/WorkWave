@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Резюме {{ resume.profession }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/resume_detail.css">
+
+<div class="resume-detail-container">
+    <div class="back-link">
+        <a href="{% if is_company %}{% url 'profile' resume.user.id %}{% else %}{% url 'profile' %}{% endif %}">
+            <i class="fas fa-arrow-left"></i> Назад к профилю
+        </a>
+    </div>
+    
+    <div class="resume-card single-column">
+        <div class="resume-header">
+            {% if is_own_profile and not is_company %}
+            <div class="resume-actions">
+                <a href="" class="edit-resume-button" title="Редактировать">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="" class="delete-button" title="Удалить">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="resume-content">
+            <!-- Основная информация -->
+            <div class="resume-section">
+                <h4 class="resume-section-title">
+                    <i class="fas fa-user-circle"></i> Основная информация
+                </h4>
+                <div class="resume-section-content">
+                    <p><strong>ФИО:</strong> {{ resume.last_name }} {{ resume.first_name }} {{ resume.middle_name|default:"" }}</p>
+                    <p><strong>Дата рождения:</strong> {{ resume.birth_date|date:"d.m.Y" }}</p>
+                    <p><strong>Телефон:</strong> {{ resume.phone }}</p>
+                    <p><strong>Email:</strong> {{ resume.user.email }}</p>
+                    <p><strong>Пол:</strong> {{ resume.get_gender_display }}</p>
+                    <p><strong>Гражданство:</strong> {{ resume.citizenship }}</p>
+                </div>
+            </div>
+
+            <!-- Образование -->
+            <div class="resume-section">
+                <h4 class="resume-section-title">
+                    <i class="fas fa-graduation-cap"></i> Образование
+                </h4>
+                <div class="resume-section-content">
+                    {% if resume.educations.all %}
+                        {% for education in resume.educations.all %}
+                        <div class="education-item">
+                            <p><strong>Образовательное учреждение: </strong>{{ education.institution }}</p>
+                            <p><strong>Специализация:</strong> {{ education.specialization }}</p>
+                            <p><strong>Годы обучения:</strong> {{ education.year_start }} - {{ education.year_end|default:"по настоящее время" }}</p>
+                        </div>
+                        {% if not forloop.last %}<hr class="section-divider">{% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>Не указано</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Опыт работы -->
+            <div class="resume-section">
+                <h4 class="resume-section-title">
+                    <i class="fas fa-briefcase"></i> Опыт работы
+                </h4>
+                <div class="resume-section-content">
+                    {% if resume.work_experiences.all %}
+                        {% for experience in resume.work_experiences.all %}
+                        <div class="experience-item">
+                            <p><strong>Компания: </strong>{{ experience.company }}</p>
+                            <p><strong>Должность: </strong>{{ experience.position }}</p>
+                            <p><strong>Годы работы:</strong> {{ experience.date_start|date:"m.Y" }} - {% if experience.currently_working %}по настоящее время{% else %}{{ experience.date_end|date:"m.Y" }}{% endif %}</p>
+                            <p class="experience-description"><strong>Обязанности:</strong> {{ experience.responsibilities }}</p>
+                            {% if experience.achievements %}
+                            <p class="experience-description"><strong>Достижения:</strong> {{ experience.achievements }}</p>
+                            {% endif %}
+                        </div>
+                        {% if not forloop.last %}<hr class="section-divider">{% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>Не указано</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Навыки -->
+            <div class="resume-section">
+                <h4 class="resume-section-title">
+                    <i class="fas fa-tools"></i> Навыки
+                </h4>
+                <div class="resume-section-content">
+                    <div class="skills-container">
+                        {% if resume.skills %}
+                            {% for skill in resume.skills_list %}
+                            <span class="skill-tag">{{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <p>Не указаны</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

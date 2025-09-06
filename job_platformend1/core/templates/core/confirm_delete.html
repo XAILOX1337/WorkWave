@@ -1,0 +1,123 @@
+<!-- templates/core/confirm_delete.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}Подтверждение удаления{% endblock %}
+
+{% block content %}
+<style>
+.confirm-delete-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 2rem;
+    background-color: #f8fafc;
+}
+
+.confirm-delete-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    max-width: 500px;
+    width: 100%;
+}
+
+.confirm-delete-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.confirm-delete-card p {
+    color: #64748b;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.delete-button {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.delete-button:hover {
+    background-color: #dc2626;
+    text-decoration: none;
+}
+
+.cancel-button {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.cancel-button:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    text-decoration: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .confirm-delete-container {
+        padding: 1rem;
+    }
+    
+    .confirm-delete-card {
+        padding: 1.5rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .delete-button,
+    .cancel-button {
+        width: 100%;
+    }
+}</style>
+<link rel="stylesheet" href="../../static/CSS/confirm_delete.css">
+<div class="confirm-delete-container">
+    <div class="confirm-delete-card">
+        <h2>Подтвердите удаление</h2>
+        <p>Вы уверены, что хотите удалить {{ type }} "{{ object }}"?</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="button-group">
+                <button type="submit" class="delete-button">Удалить</button>
+                <a onclick="goBack()" class="cancel-button">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

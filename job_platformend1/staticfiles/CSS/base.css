@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(186, 222, 239);
+}
+.bg-blue-200.py-8{
+    background-color: rgb(186, 222, 239);
+}
+span{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+    color:#393B3B
+}
+.logo-container {
+    margin-top: 25pt;
+    margin-left: 20px;
+    text-decoration: none !important;
+}
+
+.logo-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none !important;
+}
+
+.logo-shadow, .logo-main {
+    font-family: Inter;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 1;
+    display: block;
+    text-decoration: none !important;
+}
+
+.logo-shadow {
+    color: #0983C8;
+    position: relative;
+    left: 5px;
+    text-decoration: none !important;
+}
+
+.logo-main {
+    color: #ffffff;
+    position: relative;
+    top: -1.05em;
+    text-decoration: none;
+}
+.logo-main:hover{
+    text-decoration: none;
+}
+.logo-shadow:hover{
+    text-decoration: none;
+}
+.nav {
+    display: flex;
+    gap: 16px;
+    color: #393B3B;
+    margin-left: 50px;
+}
+.nav a {
+    font-family: Inter;
+    text-decoration: none;
+    color: inherit;
+}
+.nav a:hover {
+    color: #393B3B;
+}
+.LK {
+    margin-right: 40pt;
+    background: #F4F5F9;
+    border-radius: 999px;
+}
+.link-to-chats {
+    background: #F4F5F9;
+    padding: 5px;
+    border-radius: 999px;
+}
+.links-container {
+    display: flex;
+    align-items: center;
+    
+    gap: 10px;
+}
+
+/* Адаптация для уменьшения размеров */
+@media (max-width: 1200px) {
+    .logo-shadow, .logo-main {
+        font-size: 32px;
+    }
+    .logo {
+        font-size: 28px;
+    }
+    .nav a {
+        font-size: 14px;
+    }
+    
+    .nav {
+        gap: 12px;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 992px) {
+    
+    .logo {
+        font-size: 24px;
+    }
+    .nav a {
+        font-size: 13px;
+    }
+    
+    .nav {
+        gap: 10px;
+        margin-left: 20px;
+    }
+    .LK {
+        margin-right: 30px;
+    }
+    .nav-link {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    .logo-shadow, .logo-main {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 20px;
+    }
+    .nav a {
+        font-size: 12px;
+    }
+    
+    .nav {
+        gap: 8px;
+        margin-left: 20px;
+    }
+    .LK {
+        margin-right: 20px;
+    }
+    .nav-link {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+

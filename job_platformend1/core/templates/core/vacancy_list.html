@@ -1,0 +1,465 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Список вакансий{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    .filters-overlay {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: #F4F5F9;
+      box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease-in-out;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    .filters-overlay.active {
+      right: 0;
+    }
+    .filters-overlay .back-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      color: #3b82f6;
+    }
+    .filters-overlay .back-button i {
+      font-size: 18px;
+    }
+    .filters-overlay .title {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .filters-overlay .label {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .filters-overlay .input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .filters-overlay .input-half {
+      width: calc(50% - 5px);
+    }
+    .filters-overlay .checkbox-label, .filters-overlay .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .filters-overlay .submit-button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #3b82f6;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    /* Стили для выпадающего списка тегов */
+.tags-dropdown-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.tags-trigger {
+    padding: 12px 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: #2b2d42;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tags-trigger::after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+}
+
+.tags-dropdown-container.active .tags-trigger::after {
+    transform: rotate(180deg);
+}
+
+.tags-options {
+    
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 100;
+    display: none;
+    margin-top: 5px;
+}
+
+.tags-dropdown-container.active .tags-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-option {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    color: #2b2d42;
+}
+
+
+.tag-option.selected {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.selected-tags-container {
+    display: block;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag-chip {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.tag-chip button {
+    background: none;
+    border: none;
+    color: #0369a1;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+.flexing{
+    display: flex
+}
+</style>
+
+<div class="containerr">
+    <h1 class="page-title">Вакансии для вас</h1>
+    
+    <!-- Основная форма, которая теперь включает и поиск и фильтры -->
+    <form method="get" action="{% url 'vacancy_list' %}" id="main-form">
+        <div class="search-bar">
+            <div class="search-form">
+                <input type="text" name="query" placeholder="Поиск по названию или описанию" value="{{ query }}" class="search-input">
+                <button type="submit" class="search-button">Найти</button>
+                <button type="button" class="filter-button" onclick="toggleFilters()">
+                    <i class="fas fa-sliders-h"></i> Фильтры
+                </button>
+            </div>
+        </div>
+        
+        <!-- Блок фильтров теперь часть основной формы -->
+        <div class="filters-overlay" id="filters-overlay">
+            <div class="back-button" onclick="toggleFilters()">
+                <span>Закрыть &#x2715;</span>
+            </div>
+            <h1 class="title">Поиск вакансий</h1>
+            <h3>Фильтры по тегам:</h3>
+            <div class="tags-dropdown-container">
+        <div class="tags-trigger">
+            <span>Выберите теги</span>
+        </div>
+        <div class="tags-options">
+            {% for tag in tags %}
+            <div class="flexing">
+                <div class="tag-option" style="cursor:inherit;" value="{{ tag.id }}">{{ tag.name }}</div>
+                <input type="checkbox" name="tags" class="tag-option"  value="{{ tag.id }}" {% if tag.id|stringformat:"s" in selected_tags %}checked{% endif %}>
+            </div>
+                
+            {% endfor %}
+        </div>
+        <div class="selected-tags-container" id="selected-tags"></div>
+        
+    </div>
+            
+            <div class="mb-4">
+                <label class="label">Заработная плата</label>
+                <div class="flex space-x-4">
+                    <input type="text" name="salary_min" placeholder="от 10 000" class="input input-half" value="{{ request.GET.salary_min }}">
+                    <input type="text" name="salary_max" placeholder="до 100 000" class="input input-half" value="{{ request.GET.salary_max }}">
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="label">Образование</label>
+                <div class="space-y-2">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="education" value="none" {% if "none" in request.GET.education %}checked{% endif %}> Не требуется или не указано
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="education" value="secondary" {% if "secondary" in request.GET.education %}checked{% endif %}> Среднее профессиональное
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="education" value="higher" {% if "higher" in request.GET.education %}checked{% endif %}> Высшее
+                    </label>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="label">Требуемый опыт работы</label>
+                <div class="space-y-2">
+                    <label class="radio-label">
+                        <input type="radio" name="experience" value="any" {% if not request.GET.experience or request.GET.experience == "any" %}checked{% endif %}> Не имеет значения
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="experience" value="no" {% if request.GET.experience == "no" %}checked{% endif %}> Нет опыта
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="experience" value="1-3" {% if request.GET.experience == "1-3" %}checked{% endif %}> От 1 года до 3 лет
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="experience" value="3-6" {% if request.GET.experience == "3-6" %}checked{% endif %}> От 3 до 6 лет
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="experience" value="6+" {% if request.GET.experience == "6+" %}checked{% endif %}> Более 6 лет
+                    </label>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="label">Тип занятости</label>
+                <div class="space-y-2">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="employment" value="full" {% if "full" in request.GET.employment %}checked{% endif %}> Полная занятость
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="employment" value="part" {% if "part" in request.GET.employment or not request.GET.employment %}checked{% endif %}> Частичная занятость
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="employment" value="project" {% if "project" in request.GET.employment %}checked{% endif %}> Проектная работа/разовое задание
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="employment" value="volunteer" {% if "volunteer" in request.GET.employment %}checked{% endif %}> Волонтерство
+                    </label>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="label">Сортировка</label>
+                <div class="space-y-2">
+                    <label class="radio-label">
+                        <input type="radio" name="sort" value="relevance" {% if not request.GET.sort or request.GET.sort == "relevance" %}checked{% endif %}> По соответствию
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="sort" value="date" {% if request.GET.sort == "date" %}checked{% endif %}> По дате изменения
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="sort" value="salary_desc" {% if request.GET.sort == "salary_desc" %}checked{% endif %}> По убыванию зарплаты
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="sort" value="salary_asc" {% if request.GET.sort == "salary_asc" %}checked{% endif %}> По возрастанию зарплаты
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="submit-button">Применить фильтры</button>
+        </div>
+    </form>
+    
+    <div class="content-wrapper">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <i class="fas fa-file-alt icon"></i>
+                    <a href="{% url 'profile' %}">Мое резюме</a>
+                </li>
+                <li class="sidebar-item">
+                    <i class="fas fa-briefcase icon"></i>
+                    <a href="{% url 'profile' %}">Мои вакансии</a>
+                   
+                </li>
+                <li class="sidebar-item">
+                    <i class="fas fa-star icon"></i>
+                    <a href="{% url 'favorite_vacancies' %}">Избранные вакансии</a>
+                    
+                </li>
+            </ul>
+        </div>
+        
+        <div class="vacancies-list">
+            {% for vacancy in vacancies %}
+            <a href="{% url 'vacancy_detail' vacancy.id %}" class="vacancy-link">
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <div class="vacancy-info">
+                            <h2 class="vacancy-title">{{ vacancy.title }}</h2>
+                            <p class="salary">{{ vacancy.salary }} ₽</p>
+                            <p class="company">{{ vacancy.company }}</p>
+                        </div>
+                        {% if vacancy.photo %}
+                        <img src="{{ vacancy.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% elif vacancy.company.photo %}
+                        <img src="{{ vacancy.company.photo.url }}" alt="Логотип компании {{ vacancy.company.name }}" class="company-logo">
+                        {% else %}
+                        <div class="profile-photo">
+                            <div class="photo-container">
+                        <div style="background: #e2e8f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #a0aec0;"></i>
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+                        
+                    </div>
+                    <div class="tags-container">
+                        {% for tag in vacancy.tags.all %}
+                            <span class="tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="vacancy-actions">
+                        <a href="{% url 'apply_for_vacancy' vacancy.id %}" class="apply-button">Откликнуться</a>
+                        {% if user.is_authenticated %}
+                            {% if vacancy.favorite %}
+                                <a href="{% url 'remove_from_favorite' vacancy.id %}" class="action-button favorite-button">
+                                    <i class="fas fa-heart" style="color: #ff0000;"></i> В избранном
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_to_favorite' vacancy.id %}" class="action-button favorite-button">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const tagsContainer = document.querySelector('.tags-dropdown-container');
+    const tagsTrigger = document.querySelector('.tags-trigger');
+    const tagsOptions = document.querySelector('.tags-options');
+    const selectedTagsContainer = document.getElementById('selected-tags');
+    const tagsInput = document.getElementById('tags-input');
+    
+    // Открытие/закрытие выпадающего списка
+    tagsTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        tagsContainer.classList.toggle('active');
+    });
+    
+    
+    
+    // Обновление выбранных тегов
+    function updateSelectedTags() {
+        selectedTagsContainer.innerHTML = '';
+        const selectedTags = [];
+        
+        tagsOptions.querySelectorAll('.tag-option.selected').forEach(option => {
+            const tagId = option.getAttribute('data-value');
+            const tagName = option.textContent;
+            
+            const tagChip = document.createElement('div');
+            tagChip.className = 'tag-chip';
+            tagChip.innerHTML = `
+                ${tagName}
+                <button type="button" data-value="${tagId}">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            `;
+            selectedTagsContainer.appendChild(tagChip);
+            
+            selectedTags.push(tagId);
+        });
+        
+        // Обновляем скрытое поле с выбранными тегами
+        tagsInput.value = selectedTags.join(',');
+    }
+    
+    // Удаление тега
+    selectedTagsContainer.addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+            const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+            const tagId = button.getAttribute('data-value');
+            
+            const option = tagsOptions.querySelector(`.tag-option[data-value="${tagId}"]`);
+            option.classList.remove('selected');
+            
+            updateSelectedTags();
+        }
+    });
+    
+    // Закрытие выпадающего списка при клике вне его
+    document.addEventListener('click', function() {
+        tagsContainer.classList.remove('active');
+    });
+    
+    // Инициализация выбранных тегов из URL (если есть)
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedTagsParam = urlParams.get('tags');
+    
+    if (selectedTagsParam) {
+        const selectedTagIds = selectedTagsParam.split(',');
+        
+        selectedTagIds.forEach(tagId => {
+            const option = tagsOptions.querySelector(`.tag-option[data-value="${tagId}"]`);
+            if (option) {
+                option.classList.add('selected');
+            }
+        });
+        
+        updateSelectedTags();
+    }
+});
+    function toggleFilters() {
+        const filtersOverlay = document.getElementById('filters-overlay');
+        filtersOverlay.classList.toggle('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обновляем счетчик избранных
+        const favoriteButtons = document.querySelectorAll('.favorite-button .fas.fa-heart');
+        document.getElementById('favorite-count').textContent = favoriteButtons.length;
+        
+        // Обработчик для кнопки "Применить фильтры" - закрывает панель фильтров
+        document.querySelector('.filters-overlay .submit-button').addEventListener('click', function() {
+            document.getElementById('filters-overlay').classList.remove('active');
+        });
+    });
+</script>
+{% endblock %}

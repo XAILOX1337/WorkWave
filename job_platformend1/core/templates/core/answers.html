@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../../static/CSS/answers.css">
+</head>
+<body>
+    <div class="answers-container">
+        <div class="back-link-container">
+            <div class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <a onclick="goBack()">Назад</a>
+            </div>
+        </div>
+        <div class="grid">
+            
+            <div class="card">
+                <h2>Как устроиться на удалённую работу?</h2>
+                <ol>
+                    <li>Подумайте о том, какие навыки у вас есть и в каких областях вы можете работать.</li>
+                    <li>Подготовьте актуальное резюме и портфолио.</li>
+                    <li>Начинайте подавать заявки на интересующие вакансии.</li>
+                    <li>Будьте готовы к видео-собеседованиям.</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h2>Что меня ждёт после собеседования?</h2>
+                <ol>
+                    <li>Ожидание ответа от работодателя (от нескольких дней до недель).</li>
+                    <li>Возможная обратная связь даже при отказе.</li>
+                    <li>Второе собеседование или тестовое задание.</li>
+                    <li>Официальное предложение о работе при успехе.</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h2>Как выбрать вакансию?</h2>
+                <ol>
+                    <li>Определите свои навыки и интересы.</li>
+                    <li>Изучите требования и обязанности.</li>
+                    <li>Узнайте о компании и условиях работы.</li>
+                    <li>Проверьте возможности для роста.</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h2>Как правильно заполнить резюме?</h2>
+                <ol>
+                    <li>Контактная информация</li>
+                    <li>Цель или резюме профиля</li>
+                    <li>Образование</li>
+                    <li>Опыт работы и навыки</li>
+                    <li>Ссылки на портфолио</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h2>Что от меня требуется перед собеседованием?</h2>
+                <ol>
+                    <li>Подготовка ответов на частые вопросы.</li>
+                    <li>Проверка оборудования.</li>
+                    <li>Выбор тихого места с нейтральным фоном.</li>
+                    <li>Иметь под рукой резюме.</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h2>Как вести себя на собеседовании?</h2>
+                <ol>
+                    <li>Приходите вовремя (для онлайн - за 5 минут до начала).</li>
+                    <li>Будьте вежливы и профессиональны.</li>
+                    <li>Говорите четко и по существу.</li>
+                    <li>Задавайте вопросы о работе и компании.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

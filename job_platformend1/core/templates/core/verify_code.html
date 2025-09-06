@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="login-form">
+    <div class="login-container">
+        <h2 class="title">Подтверждение сброса пароля</h2>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <p>Введите 6-значный код, отправленный на {{ request.session.password_reset_email }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <input type="text" name="code" placeholder="Введите код" required
+                       pattern="\d{6}" title="6 цифр">
+            </div>
+            <button type="submit" class="submit-button">Подтвердить</button>
+        </form>
+        
+        <div class="link-container">
+            <a href="{% url 'password_reset' %}">Отправить код повторно</a>
+            <a href="{% url 'login' %}">Отмена</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

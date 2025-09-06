@@ -1,0 +1,79 @@
+body {
+    background-color: #f4f5f9;
+    font-family: Arial, sans-serif;
+    background-color: #F4F5F9;
+}
+.vaccontainer {
+    background-color: #F4F5F9;
+    max-width: 56rem;
+    min-height: 650px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+.back-button {
+    display: flex;
+    align-items: center;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+.back-button i {
+    margin-right: 0.5rem;
+}
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+.vacancy-card {
+    background-color: #f4f5f9;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+.vacancy-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.vacancy-card .salary {
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+.vacancy-card .experience, .vacancy-card .company {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+.vacancy-card .edit-button {
+    background-color: #3b82f6;
+    color: #f4f5f9;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+}
+.vacancy-card.highlighted {
+    border: 2px solid #3b82f6;
+}
+.add-vacancy-button {
+    background-color: #3b82f6;
+    color: #f4f5f9;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
+.back-link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem; /* mb-4 */
+    color: #3b82f6; /* text-blue-500 */
+    text-decoration: none;
+    cursor: pointer;
+}
+.back-link i {
+    margin-right: 0.5rem; /* ml-2 */
+}

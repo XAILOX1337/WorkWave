@@ -1,0 +1,134 @@
+
+body{
+ overflow-x:hidden;
+    background-color: #F4F5F9;
+}
+.back-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 20px 0 20px 19vw;
+    color: #0983C8;
+    text-decoration: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+
+.grid {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #393B3B;
+}
+
+.card ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 0;
+    color: #393B3B;
+}
+
+.card ol li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    color: #393B3B;
+    line-height: 1.4;
+}
+.back-link-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 1rem;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    color: #0983C8;
+    text-decoration: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+
+.answers-container {
+    background-color: #F4F5F9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Manrope', sans-serif;
+    width: 100%;
+    padding: 2rem;
+    overflow-x: hidden;
+}
+
+.grid {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 1rem;
+}
+@media (max-width: 1524px) {
+    
+     .back-link {
+        margin: 15px 0 15px 15px;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    
+    .answers-container {
+        padding: 1rem;
+    }
+    
+    .card {
+        padding: 1.25rem;
+    }
+    
+   
+}
+

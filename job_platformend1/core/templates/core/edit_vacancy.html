@@ -1,0 +1,544 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}Редактирование вакансии - {{ vacancy.title }}{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --primary-color: #4361ee;
+    --primary-hover: #3a56d4;
+    --secondary-color: #f8f9fa;
+    --text-color: #2b2d42;
+    --text-light: #6c757d;
+    --border-color: #e9ecef;
+    --error-color: #ef233c;
+    --success-color: #4cc9f0;
+    --tag-bg: #e0f2fe;
+    --tag-text: #0369a1;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --transition: all 0.2s ease;
+    --edit-accent: #2563eb;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.edit-vacancy-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.edit-vacancy-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.edit-vacancy-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.edit-vacancy-header h1 svg {
+    color: var(--edit-accent);
+}
+
+.edit-vacancy-header .subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.edit-vacancy-card {
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--edit-accent);
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-vacancy-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--edit-accent), #2563eb);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: var(--edit-accent);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: #2563eb;
+}
+
+.back-link i {
+    margin-right: 0.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .form-field:last-child,
+    .form-field.wide-field {
+        grid-column: span 1;
+    }
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-label {
+    width: 100%;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.required-star {
+    color: var(--error-color);
+    margin-left: 0.25rem;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: white;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--edit-accent);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Tags selector styles */
+.tags-selector {
+    position: relative;
+    width: 100%;
+}
+
+.tags-selector select[multiple] {
+    display: none;
+}
+
+.select-trigger {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.select-trigger:hover {
+    border-color: var(--edit-accent);
+}
+
+.select-trigger::after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+}
+
+.tags-dropdown {
+    position: absolute;
+    
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: white;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    display: none;
+    margin-top: 0.25rem;
+}
+
+.tags-selector.active .tags-dropdown {
+    display: block;
+}
+
+.tags-selector.active .select-trigger::after {
+    transform: rotate(180deg);
+}
+
+.tag-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tag-item:hover {
+    background-color: #f8f9fa;
+}
+
+.tag-item.selected {
+    background-color: var(--edit-accent);
+    color: white;
+}
+
+.selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag-chip {
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tag-chip button {
+    background: none;
+    border: none;
+    color: var(--tag-text);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Form validation */
+.has-error input,
+.has-error textarea,
+.has-error select,
+.has-error .tags-selector {
+    border-color: var(--error-color);
+}
+
+.error-text {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.help-text {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: white;
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.cancel-btn:hover {
+    background-color: #f1f3f5;
+}
+
+.submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--edit-accent);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.submit-btn:hover {
+    background-color: #2563eb;
+}
+
+/* File input styling */
+input[type="file"] {
+    padding: 0.5rem;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-right: 1rem;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #e9ecef;
+}
+</style>
+<link rel="stylesheet" href="../../static/CSS/edit_vacancy.css">
+
+<div class="edit-vacancy-container">
+    <div class="edit-vacancy-header">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            Редактирование вакансии
+        </h1>
+        <p class="subtitle">Внесите необходимые изменения в вакансию "{{ vacancy.title }}"</p>
+    </div>
+
+    <div class="edit-vacancy-card">
+        <div class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <a href="{% url 'company_profile' company_id=request.user.company.id %}">Назад</a>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" class="vacancy-form">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                {% for field in form %}
+                <div class="form-field {% if field.errors %}has-error{% endif %}">
+                    <label class="form-label">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="required-star">*</span>{% endif %}
+                    </label>
+                    
+                    {% if field.name == 'tags' or field.name == 'education' or field.name == 'employment_type' or field.name == 'experience' %}
+                        <div class="tags-selector">
+                            <select name="{{ field.name }}" id="id_{{ field.name }}" multiple style="display: none;">
+                                {% for value, label in field.field.choices %}
+                                    <option value="{{ value }}" {% if value in field.value or value|stringformat:"s" in field.value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            
+                            <div class="select-trigger">
+                                {% if field.name == 'tags' %}
+                                <span>Выберите теги</span>
+                                {% elif field.name == 'education' %}
+                                <span>Выберите ступень образования</span>
+                                {% elif field.name == 'employment_type' %}
+                                <span>Выберите тип занятости</span>
+                                {% elif field.name == 'experience' %}
+                                <span>Выберите опыт работы</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="tags-dropdown">
+                                {% for value, label in field.field.choices %}
+                                    <div class="tag-item" data-value="{{ value }}">
+                                        {{ label }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="selected-tags" id="selected-tags-container">
+                                {% for value, label in field.field.choices %}
+                                    {% if value in field.value or value|stringformat:"s" in field.value %}
+                                        <div class="tag-chip">
+                                            {{ label }}
+                                            <button type="button" data-value="{{ value }}">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    
+                    {% if field.help_text %}
+                        <p class="help-text">{{ field.help_text }}</p>
+                    {% endif %}
+                    
+                    {% for error in field.errors %}
+                        <p class="error-text">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-actions">
+                <a href="{% url 'company_profile' company_id=request.user.company.id %}" class="cancel-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Отмена
+                </a>
+                <button type="submit" class="submit-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Сохранить изменения
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tagsSelectors = document.querySelectorAll('.tags-selector');
+    
+    tagsSelectors.forEach(selector => {
+        const trigger = selector.querySelector('.select-trigger');
+        const dropdown = selector.querySelector('.tags-dropdown');
+        const tagItems = selector.querySelectorAll('.tag-item');
+        const selectElement = selector.querySelector('select');
+        const selectedTagsContainer = selector.querySelector('.selected-tags');
+        
+        trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            selector.classList.toggle('active');
+        });
+        
+        tagItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                const option = selectElement.querySelector(`option[value="${value}"]`);
+                
+                option.selected = !option.selected;
+                this.classList.toggle('selected');
+                updateSelectedTags();
+            });
+        });
+        
+        function updateSelectedTags() {
+            selectedTagsContainer.innerHTML = '';
+            Array.from(selectElement.selectedOptions).forEach(option => {
+                const tagChip = document.createElement('div');
+                tagChip.className = 'tag-chip';
+                tagChip.innerHTML = `
+                    ${option.text}
+                    <button type="button" data-value="${option.value}">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                `;
+                selectedTagsContainer.appendChild(tagChip);
+            });
+        }
+        
+        selectedTagsContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                const button = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
+                const value = button.getAttribute('data-value');
+                
+                const option = selectElement.querySelector(`option[value="${value}"]`);
+                option.selected = false;
+                
+                const tagItem = selector.querySelector(`.tag-item[data-value="${value}"]`);
+                tagItem.classList.remove('selected');
+                
+                updateSelectedTags();
+            }
+        });
+        
+        document.addEventListener('click', function() {
+            selector.classList.remove('active');
+        });
+        
+        tagItems.forEach(item => {
+            const value = item.getAttribute('data-value');
+            const option = selectElement.querySelector(`option[value="${value}"]`);
+            
+            if (option.selected) {
+                item.classList.add('selected');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

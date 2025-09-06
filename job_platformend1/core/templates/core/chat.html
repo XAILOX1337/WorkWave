@@ -1,0 +1,114 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}Чат с {{ receiver.username }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../../static/CSS/chat.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.12.0/dist/index.min.css">
+
+<div class="chat-wrapper">
+    <div class="chat-container">
+        <div class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <a href="{% url 'chat_list' %}">Назад</a>
+        </div>
+        
+        <div class="chat-header">
+            {% if receiver.profile.photo %}
+            <img src="{{ receiver.profile.photo.url }}" alt="Фото профиля" class="chat-avatar">
+        {% else %}
+            <div class="avatar-placeholder">
+                <i class="fas fa-user"></i>
+            </div>
+        {% endif %}
+            <h1 class="page-title">{{ receiver.username }}</h1>
+            <a href="{% url 'video_call' receiver.id %}" class="video-call-btn">
+                <i class="fas fa-video"></i>
+            </a>
+        </div>
+
+        <div class="chat-messages-container">
+            <div class="chat-messages" id="messages-container">
+                {% for message in messages %}
+                    <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                        <div class="message-content">
+                            <p class="message-text">{{ message.message|linebreaksbr }}</p>
+                            {% if message.file %}
+                            <div class="message-file">
+                                {% if message.is_image %}
+                                    <a href="{{ message.file.url }}" data-lightbox="message-images" data-title="Отправлено {{ message.timestamp|time:"H:i" }}">
+                                        <img src="{{ message.file.url }}" alt="Прикрепленное изображение" class="file-image">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ message.file.url }}" target="_blank" class="file-link">
+                                        <i class="fas fa-file-alt"></i> {{ message.get_file_name }} ({{ message.file.size|filesizeformat }})
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            <small class="message-time">{{ message.timestamp|time:"H:i" }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <form method="post" class="chat-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="message-input-container">
+                <div class="input-actions">
+                    <label for="file-upload" class="file-upload-btn" title="Прикрепить файл">
+                        <i class="fas fa-paperclip"></i>
+                        <input id="file-upload" type="file" name="file" style="display: none;">
+                    </label>
+                    
+                </div>
+                {{ form.message }}
+                <button type="submit" class="send-btn" title="Отправить">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div id="file-name-display" class="file-name-display"></div>
+        </form>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.12.0/dist/index.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const messagesContainer = document.getElementById('messages-container');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        
+        
+        // Отображение имени файла
+        const fileInput = document.getElementById('file-upload');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = `Файл: ${fileInput.files[0].name}`;
+                fileNameDisplay.style.display = 'block';
+            } else {
+                fileNameDisplay.style.display = 'none';
+            }
+        });
+        
+        // Автоматическое увеличение высоты textarea при вводе
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+</script>
+{% endblock %}
+
+
